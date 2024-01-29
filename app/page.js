@@ -4,10 +4,10 @@ import React from 'react';
 import { useEffect, useState } from "react";
 
 
-
 import Avatar from "@/components/Avatar";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
+import Contact from '@/components/Contact';
 import Footer from "@/components/Footer";
 
 import "../css/index.css";
@@ -15,6 +15,7 @@ import "../css/index.css";
 import { Montserrat, Poppins, Space_Grotesk } from "next/font/google";
 import { PiArrowUp,  } from "react-icons/pi";
 import { GoChevronDown } from "react-icons/go";
+import Link from 'next/link';
 
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"], weight: "700" });
@@ -41,18 +42,21 @@ const Page = () => {
   }, []);
 
   const [showBackToTop, setShowBackToTop] = useState(false);
+  
+  const [showContact, setShowContact] = useState(false);
+
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const scrollDownSmooth = () => {
-    window.scrollTo({ top:750, behavior: "smooth" });
+    window.scrollTo({ top:690, behavior: "smooth" });
   };
 
 
   return (
-    <div className="">
-      <div className="flex items-center justify-center h-[60vh] bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8]">
+    <div className="pt-[80px]">
+      <div className="flex items-center justify-center h-[60vh]  bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8]">
         <div className="flex justify-center gap-[80px] items-center text-black text-left">
           <Avatar imageURL="/statue.png"></Avatar>
           <div className="flex flex-col gap-4">
@@ -75,22 +79,30 @@ const Page = () => {
               developer known for rapid learning and innovation.
             </p>
             <div className="flex gap-4 w-fit">
-              <a href="">
+              <Link href="https://github.com/krishnan74/">
                 <img src="/git.png" alt="" height={30} width={30} />
-              </a>
-              <a href="">
-                <img src="/twitter.png" alt="" height={30} width={30} />
-              </a>
-              <a href="">
+              </Link>
+
+              <Link href="https://www.linkedin.com/in/divyakrishnan-r/">
                 <img src="/linked.png" alt="" height={30} width={30} />
-              </a>
+              </Link>
+
+              <Link href="https://twitter.com/Krishna29371748">
+                <img src="/twitter.png" alt="" height={30} width={30} />
+              </Link>
             </div>
 
             <div className="">
-              <button className="primary-btn text-white px-5 py-2 mr-5 bg-[#212121]">
+              <Link
+                href="/Resume.pdf"
+                alt="PDF file of my resume"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="primary-btn text-white px-5 py-[10px] mr-5 bg-[#212121]"
+              >
                 Download CV
-              </button>
-              <button className="secondary-btn border border-black px-5 py-2">
+              </Link>
+              <button onClick={()=> setShowContact(true)} className="secondary-btn border border-black px-5 py-[6.5px]">
                 Get in Touch
               </button>
             </div>
@@ -120,15 +132,23 @@ const Page = () => {
 
       <p
         id="projects"
-        className={`flex justify-center  items-center text-white   ${space_grotesk.className} text-5xl mb-[65px] underline pt-[80px]`}
+        className={`flex justify-center  items-center text-white   ${space_grotesk.className} text-5xl mb-[65px] underline pt-[80px] `}
       >
         Projects
       </p>
-      <div className="flex justify-center">
+      <div className="flex justify-center z-0">
         <Projects></Projects>
       </div>
 
       <div className="h-20"></div>
+
+      <div
+        className={`fixed top-60 left-[33.5vw] z-20 ${
+          showContact ? "block" : "hidden"
+        }`}
+      >
+        <Contact callBack={setShowContact} />
+      </div>
 
       <Footer></Footer>
     </div>

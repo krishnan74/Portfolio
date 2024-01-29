@@ -60,7 +60,7 @@ people to the LICET's infrastructure.
 
       <ProjectCard
         projectName="NFT Bot"
-        projectDescription="Discord bot designed for seamless exploration of user-owned NFTs. With user-friendly commands, quickly discover detailed information about specific NFTs, including metadata and ownership history."
+        projectDescription="Discord bot designed for seamless exploration of user-owned NFTs. With user-friendly commands, quickly discover detailed information about specific NFTs, including metadata."
         techStack1="discord.js"
         techStack2="Open Sea API"
         techStack3="web3.js"
