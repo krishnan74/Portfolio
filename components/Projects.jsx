@@ -3,10 +3,10 @@ import ProjectCard from "./ProjectCard";
 
 const Projects = () => {
   return (
-    <div  className="text-white grid grid-cols-3 gap-x-5 gap-y-5">
+    <div className="text-white grid grid-cols-3 gap-x-5 gap-y-5">
       <ProjectCard
         projectName="XRP-Commerce"
-        projectDescription="A Web3 marketplace made on XRP Ledger
+        projectDescription="A Decentralized ECommerce platform made on XRP Ledger
 where users can sell and buy their products without any
 middleman."
         techStack1="Next JS"
@@ -34,7 +34,7 @@ the middlemen."
         techStack1="React JS"
         techStack2="Solidity"
         techStack3="web3.js"
-        projectURL="https://xrp-ecommerce.vercel.app/"
+        projectURL="https://own-your-tune.vercel.app/"
       ></ProjectCard>
 
       <ProjectCard
@@ -59,29 +59,17 @@ people to the LICET's infrastructure.
       ></ProjectCard>
 
       <ProjectCard
-        projectName="Weather UI Clone"
-        projectDescription="Recreation of Weather UI design into a React Webpage"
-        techStack1="React JS"
-        techStack2="TailwindCSS"
-        techStack3="UI/ UX Design"
-        projectURL="https://xrp-ecommerce.vercel.app/"
-      ></ProjectCard>
-
-      <ProjectCard
         projectName="NFT Bot"
-        projectDescription="An educational website for Anna University
-students to access study notes and question banks."
-        techStack1="Next JS"
-        techStack2="MongoDB"
-        techStack3="TailwindCSS"
+        projectDescription="Discord bot designed for seamless exploration of user-owned NFTs. With user-friendly commands, quickly discover detailed information about specific NFTs, including metadata and ownership history."
+        techStack1="discord.js"
+        techStack2="Open Sea API"
+        techStack3="web3.js"
         projectURL="https://xrp-ecommerce.vercel.app/"
       ></ProjectCard>
 
       <ProjectCard
         projectName="Agro Link"
-        projectDescription="A Mobile application to navigate and familiarize
-people to the LICET's infrastructure.
-"
+        projectDescription="A Web dApp for farmers to sell their produce directly to the consumers by eliminating the middlemen."
         techStack1="Next JS"
         techStack2="Cadence"
         techStack3="FCL"
@@ -89,12 +77,21 @@ people to the LICET's infrastructure.
       ></ProjectCard>
 
       <ProjectCard
-        projectName="Echo Lens"
-        projectDescription="A web3 marketplace for users to buy and sell products"
-        techStack1="Next JS"
-        techStack2="Solidity"
-        techStack3="Supabase"
-        projectURL="https://xrp-ecommerce.vercel.app/"
+        projectName="Banking"
+        projectDescription="A banking system website developed for GRIP internship task. The website contains a list of customers along with their account balance and transaction function."
+        techStack1="XAMPP"
+        techStack2="PHP"
+        techStack3="MySQL"
+        projectURL="https://github.com/krishnan74/banking-system"
+      ></ProjectCard>
+
+      <ProjectCard
+        projectName="Weather UI Clone"
+        projectDescription="Recreation of Weather UI design into a React Webpage"
+        techStack1="React JS"
+        techStack2="TailwindCSS"
+        techStack3="UI/ UX Design"
+        projectURL="https://weather-css-five.vercel.app/"
       ></ProjectCard>
     </div>
   );
