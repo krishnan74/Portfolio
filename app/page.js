@@ -1,19 +1,19 @@
 "use client"
-import "../css/index.css";
-import Image from "next/image";
 
 import React from 'react';
-import { Montserrat, Poppins, Space_Grotesk } from "next/font/google";
+import { useEffect, useState } from "react";
+
 
 
 import Avatar from "@/components/Avatar";
 import Skills from "@/components/Skills";
-import Terminal from "@/components/Terminal";
 import Projects from "@/components/Projects";
 import Footer from "@/components/Footer";
-import { useEffect, useState } from "react";
-import { PiArrowUp,  } from "react-icons/pi";
 
+import "../css/index.css";
+
+import { Montserrat, Poppins, Space_Grotesk } from "next/font/google";
+import { PiArrowUp,  } from "react-icons/pi";
 import { GoChevronDown } from "react-icons/go";
 
 
@@ -22,8 +22,7 @@ const montserrat = Montserrat({ subsets: ["latin"], weight: "800" });
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
 
-
-const page = () => {
+const Page = () => {
   
   const handleScroll = () => {
 
@@ -99,19 +98,10 @@ const page = () => {
             </div>
           </div>
         </div>
-        {/* <div className="flex justify-center">
-          <Terminal />
-        </div> */}
+        
       </div>
 
-      {/* <div className="flex justify-center">
-        <p
-          id="projects"
-          className={` text-black text-center   ${space_grotesk.className} text-xl mt-10 bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8] w-fit px-3`}
-        >
-          Expertise
-        </p>
-      </div> */}
+      
 
       <div className="h-10"></div>
       <Skills />
@@ -150,4 +140,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

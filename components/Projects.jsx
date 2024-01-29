@@ -59,16 +59,16 @@ people to the LICET's infrastructure.
       ></ProjectCard>
 
       <ProjectCard
-        projectName="XRP-Commerce"
-        projectDescription="A web3 marketplace for users to buy and sell products"
-        techStack1="NEXT JS"
-        techStack2="Solidity"
-        techStack3="Supabase"
+        projectName="Weather UI Clone"
+        projectDescription="Recreation of Weather UI design into a React Webpage"
+        techStack1="React JS"
+        techStack2="TailwindCSS"
+        techStack3="UI/ UX Design"
         projectURL="https://xrp-ecommerce.vercel.app/"
       ></ProjectCard>
 
       <ProjectCard
-        projectName="Notes.com"
+        projectName="NFT Bot"
         projectDescription="An educational website for Anna University
 students to access study notes and question banks."
         techStack1="Next JS"
@@ -78,20 +78,20 @@ students to access study notes and question banks."
       ></ProjectCard>
 
       <ProjectCard
-        projectName="LICET - MAP"
+        projectName="Agro Link"
         projectDescription="A Mobile application to navigate and familiarize
 people to the LICET's infrastructure.
 "
-        techStack1="Flutter"
-        techStack2="MongoDB"
-        techStack3="Express"
+        techStack1="Next JS"
+        techStack2="Cadence"
+        techStack3="FCL"
         projectURL="https://xrp-ecommerce.vercel.app/"
       ></ProjectCard>
 
       <ProjectCard
-        projectName="XRP-Commerce"
+        projectName="Echo Lens"
         projectDescription="A web3 marketplace for users to buy and sell products"
-        techStack1="NEXT JS"
+        techStack1="Next JS"
         techStack2="Solidity"
         techStack3="Supabase"
         projectURL="https://xrp-ecommerce.vercel.app/"

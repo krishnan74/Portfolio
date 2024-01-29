@@ -6,7 +6,9 @@ import { Space_Grotesk } from 'next/font/google';
 const space_grotesk = Space_Grotesk({ subsets: ["latin"], weight: "400" });
 const Navbar = () => {
   return (
-    <div className={`flex justify-between bg-[#090909] text-white h-20 items-center `}>
+    <div
+      className={`flex justify-between bg-[#121212] text-white h-20 items-center `}
+    >
       <div className="tracking-wider  text-2xl ml-9">
         &lt; Divyakrishnan / &gt;
       </div>
