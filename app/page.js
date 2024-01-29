@@ -53,15 +53,13 @@ const Page = () => {
   return (
     <div className="">
       <div className="flex items-center justify-center h-[60vh] bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8]">
-        <div
-          className={`flex justify-center gap-[80px] items-center text-black text-left `}
-        >
+        <div className="flex justify-center gap-[80px] items-center text-black text-left">
           <Avatar imageURL="/statue.png"></Avatar>
           <div className="flex flex-col gap-4">
             <p
               className={` text-black font-bold ${space_grotesk.className}  text-5xl `}
             >
-              Hello I'm Divyakrishnan 
+              Hello I&apos;m Divyakrishnan
             </p>
 
             <p
@@ -98,10 +96,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-        
       </div>
-
-      
 
       <div className="h-10"></div>
       <Skills />
