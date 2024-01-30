@@ -10,7 +10,7 @@ const Projects = () => {
 where users can sell and buy their products without any
 middleman."
         techStack1="Next JS"
-        techStack2="Solidity"
+        techStack2="XRPL"
         techStack3="Supabase"
         projectURL="https://xrp-ecommerce.vercel.app/"
       ></ProjectCard>
