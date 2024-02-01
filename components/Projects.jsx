@@ -3,7 +3,11 @@ import ProjectCard from "./ProjectCard";
 
 const Projects = () => {
   return (
-    <div className="text-white grid grid-cols-3 gap-x-5 gap-y-5">
+    <div className="text-white relative grid grid-cols-3 gap-x-5 gap-y-5">
+      {/* <div className="h-[300px] w-[300px] absolute left-[-280px] top-[-130px] bg-[#fa4a4a] blur-2xl opacity-[0.4] rounded-full z-0"></div>
+      <div className="h-[190px] w-[190px] absolute right-[-250px] top-[450px] bg-[#636fdb] blur-2xl opacity-[0.8] rounded-full z-0"></div>
+       */}
+
       <ProjectCard
         projectName="XRP-Commerce"
         projectDescription="A Decentralized ECommerce platform made on XRP Ledger

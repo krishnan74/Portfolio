@@ -1,33 +1,28 @@
-"use client"
+"use client";
 
-import React from 'react';
+import React from "react";
 import { useEffect, useState } from "react";
-
 
 import Avatar from "@/components/Avatar";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
-import Contact from '@/components/Contact';
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import ProjectPage from './new/page';
+import ProjectPage from "./projects/page";
 
 import "../css/index.css";
 
 import { Montserrat, Poppins, Space_Grotesk } from "next/font/google";
-import { PiArrowUp,  } from "react-icons/pi";
+import { PiArrowUp } from "react-icons/pi";
 import { GoChevronDown } from "react-icons/go";
-import Link from 'next/link';
-
+import Link from "next/link";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"], weight: "700" });
 const montserrat = Montserrat({ subsets: ["latin"], weight: "800" });
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
-
 const Page = () => {
-  
   const handleScroll = () => {
-
     if (window.scrollY > 300) {
       setShowBackToTop(true);
     } else {
@@ -43,7 +38,7 @@ const Page = () => {
   }, []);
 
   const [showBackToTop, setShowBackToTop] = useState(false);
-  
+
   const [showContact, setShowContact] = useState(false);
 
   const handleBackToTop = () => {
@@ -51,9 +46,8 @@ const Page = () => {
   };
 
   const scrollDownSmooth = () => {
-    window.scrollTo({ top:690, behavior: "smooth" });
+    window.scrollTo({ top: 690, behavior: "smooth" });
   };
-
 
   return (
     <div className="pt-[80px]">
@@ -103,7 +97,10 @@ const Page = () => {
               >
                 Download CV
               </Link>
-              <button onClick={()=> setShowContact(true)} className="secondary-btn border border-black px-5 py-[6.5px]">
+              <button
+                onClick={() => setShowContact(true)}
+                className="secondary-btn border border-black px-5 py-[6.5px]"
+              >
                 Get in Touch
               </button>
             </div>
@@ -125,7 +122,7 @@ const Page = () => {
       {showBackToTop && (
         <button
           onClick={handleBackToTop}
-          className="fixed flex justify-center items-center bottom-6 right-6 w-10 h-10 border-white border-2 text-white rounded-full shadow-lg hover:bg-gray-100 hover:text-black"
+          className="fixed flex justify-center items-center bottom-6 right-6 w-10 h-10 border-white border-2 text-white rounded-full shadow-lg hover:bg-gray-100 hover:text-black z-10"
         >
           <PiArrowUp />
         </button>

@@ -10,7 +10,7 @@ const space_grotesk = Space_Grotesk({ subsets: ["latin"], weight: "700" });
 
 const ProjectCard = (props) => {
   return (
-    <div className="project_card">
+    <div className="project_card z-10">
       <div className="flex justify-between">
         <p className={`project_title ${space_grotesk.className}`}>
           {props.projectName}

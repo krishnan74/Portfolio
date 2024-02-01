@@ -1,6 +1,5 @@
 import React from "react";
-import ProjectTimelineCard from "@/app/new/ProjectTimelineCard";
-import "./timeline.css"
+import ProjectTimelineCard from "@/app/projects/ProjectTimelineCard";
 
 const ProjectPage = () => {
   return (
@@ -30,6 +29,8 @@ Hollywood movie (Back To The Future) made on Flow chain.
         techStack2="Flow Blockchain"
         techStack3="Flow Unity SDK"
         projectPic="/images/back-to-the-future.png"
+        frontImage="/images/back-to-the-future.png"
+        backImage="/images/back-to-the-future2.png"
       />
 
       <div className="h-10"></div>

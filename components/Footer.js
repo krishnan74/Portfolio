@@ -3,11 +3,13 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="footer border-t border-[#E8D6E3] flex justify-around items-center h-[17vh]">
+    <footer className="relative overflow-hidden footer border-t border-[#5e5e5e] flex justify-around items-center h-[17vh]">
+      <div className="h-[190px] w-[190px] absolute right-[-100px] top-[50px] bg-[#636fdb] blur-2xl opacity-[0.8] rounded-full z-0"></div>
+      <div className="h-[200px] w-[200px] absolute left-[-130px] top-[-130px] bg-[#fa4a4a] blur-2xl opacity-[0.4] rounded-full z-0"></div>
       <div className="flex justify-start gap-8 items-center text-white">
         <Link href={"/"}>About</Link>
-        <Link href={"#projects"}>Projects</Link>
-        <Link href={"#skills"}>Skills</Link>
+        <Link href={"/projects"}>Projects</Link>
+        <Link href={"/about"}>About</Link>
       </div>
 
       <div>

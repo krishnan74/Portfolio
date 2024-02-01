@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-
+import "./timeline.css";
 import ProjectCard from "@/components/ProjectCard";
 
 import { Space_Grotesk } from "next/font/google";
@@ -38,16 +38,26 @@ const ProjectTimelineCard = (props) => {
       </div>
 
       <div
-        className="h-[500px] w-[800px]"
+        className="h-[500px] w-[800px] projectPic-div "
         // onMouseEnter={() => setShowDemo(true)}
         // onMouseLeave={() => setShowDemo(false)}
       >
-        <img
-          src={props.projectPic}
-          className={`h-[500px] w-[800px] ${
-            showDemo ? "block" : "hidden"
-          } object-cover rounded-lg`}
-        ></img>
+        <div className="card">
+          <div className="card-front ">
+            <img
+              src={props.projectPic}
+              alt=""
+              className="object-cover rounded-lg h-[500px] w-[800px]"
+            />
+          </div>
+          {/* <div className="card-back">
+            <img
+              src={props.backImage}
+              alt="Back Image"
+              className="object-cover rounded-lg h-[500px] w-[800px]"
+            />
+          </div> */}
+        </div>
       </div>
     </div>
   ) : (
