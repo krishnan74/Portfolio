@@ -27,7 +27,7 @@ Hollywood movie (Back To The Future) made on Flow chain.
         techStack1="Unity (C#)"
         techStack2="Flow Blockchain"
         techStack3="Flow Unity SDK"
-        projectURL="https://xrp-ecommerce.vercel.app/"
+        projectURL="https://devfolio.co/projects/back-to-the-future-58a2"
       ></ProjectCard>
 
       <ProjectCard
@@ -48,7 +48,7 @@ students to access study notes and question banks."
         techStack1="Next JS"
         techStack2="MongoDB"
         techStack3="TailwindCSS"
-        projectURL="https://xrp-ecommerce.vercel.app/"
+        projectURL="https://github.com/krishnan74/notes.com"
       ></ProjectCard>
 
       <ProjectCard
@@ -59,7 +59,7 @@ people to the LICET's infrastructure.
         techStack1="Flutter"
         techStack2="MongoDB"
         techStack3="Express"
-        projectURL="https://xrp-ecommerce.vercel.app/"
+        projectURL="https://github.com/krishnan74/LICET-map"
       ></ProjectCard>
 
       <ProjectCard
@@ -68,7 +68,7 @@ people to the LICET's infrastructure.
         techStack1="discord.js"
         techStack2="Open Sea API"
         techStack3="web3.js"
-        projectURL="https://xrp-ecommerce.vercel.app/"
+        projectURL="https://github.com/krishnan74/discord-bot"
       ></ProjectCard>
 
       <ProjectCard
@@ -77,7 +77,7 @@ people to the LICET's infrastructure.
         techStack1="Next JS"
         techStack2="Cadence"
         techStack3="FCL"
-        projectURL="https://xrp-ecommerce.vercel.app/"
+        projectURL="https://devfolio.co/projects/agrolink-03cb"
       ></ProjectCard>
 
       <ProjectCard

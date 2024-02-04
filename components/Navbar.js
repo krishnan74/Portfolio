@@ -1,14 +1,11 @@
-"use client"
-import React, { useState } from 'react'
-import Link from 'next/link'
-import Contact from './Contact'
-import { Space_Grotesk } from 'next/font/google';
-
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+import Contact from "./Contact";
+import { Space_Grotesk } from "next/font/google";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"], weight: "400" });
 const Navbar = () => {
-
-  
   const [showContact, setShowContact] = useState(false);
   return (
     <div
@@ -21,7 +18,7 @@ const Navbar = () => {
       <div className="flex justify-start gap-8 items-center  px-9 py-2 bg-[#1f1f1f] rounded-full">
         <Link href={"/"}>Home</Link>
         <Link href={"/projects"}>Projects</Link>
-        <Link href={"/about"}>About</Link>
+        {/* <Link href={"/about"}>About</Link> */}
       </div>
 
       <div className="flex justify-end gap-8 items-center mr-9">
@@ -51,6 +48,6 @@ const Navbar = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Navbar
+export default Navbar;
