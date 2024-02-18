@@ -8,21 +8,21 @@ const Contact = (props) => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    // emailjs
-    //   .sendForm(
-    //     "service_0g0a115",
-    //     "template_tgyj4gx",
-    //     form.current,
-    //     "HGMQnDzaGpcAIG_Nu"
-    //   )
-    //   .then(
-    //     (result) => {
-    //       console.log(result.text);
-    //     },
-    //     (error) => {
-    //       console.log(error.text);
-    //     }
-    //   );
+    emailjs
+      .sendForm(
+        "service_0g0a115",
+        "template_tgyj4gx",
+        form.current,
+        "HGMQnDzaGpcAIG_Nu"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   };
 
   return (
