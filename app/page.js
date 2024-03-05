@@ -56,7 +56,7 @@ const Page = () => {
             <p
               className={`text-black font-bold text-4xl md:text-5xl ${space_grotesk.className}`}
             >
-              Hello I'm Divyakrishnan
+              Hello I&apos;m Divyakrishnan
             </p>
             <p
               className={`text-black font-bold text-xl md:text-2xl ${space_grotesk.className}`}
