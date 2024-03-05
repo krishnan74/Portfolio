@@ -11,11 +11,11 @@ const Navbar = () => {
     <div
       className={`flex justify-between bg-[#121212] text-white h-20 items-center fixed w-full z-50`}
     >
-      <div className="tracking-wider  text-2xl ml-9">
+      <div className="tracking-wider text-2xl ml-9 ">
         &lt; Divyakrishnan / &gt;
       </div>
 
-      <div className="flex justify-start gap-8 items-center  px-9 py-2 bg-[#1f1f1f] rounded-full">
+      <div className="hidden md:flex justify-start gap-8 items-center px-9 py-2 bg-[#1f1f1f] rounded-full">
         <Link href={"/"}>Home</Link>
         <Link href={"/projects"}>Projects</Link>
         {/* <Link href={"/about"}>About</Link> */}
@@ -39,11 +39,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div
-        className={`fixed top-60 left-[33.5vw] ${
-          showContact ? "block" : "hidden"
-        }`}
-      >
+      <div className={`md:hidden ${showContact ? "block" : "hidden"}`}>
         <Contact callBack={setShowContact} />
       </div>
     </div>

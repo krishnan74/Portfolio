@@ -8,14 +8,12 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import ProjectPage from "./projects/page";
-
-import "../css/index.css";
 
 import { Montserrat, Poppins, Space_Grotesk } from "next/font/google";
 import { PiArrowUp } from "react-icons/pi";
 import { GoChevronDown } from "react-icons/go";
 import Link from "next/link";
+import { space } from "postcss/lib/list";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"], weight: "700" });
 const montserrat = Montserrat({ subsets: ["latin"], weight: "800" });
@@ -50,56 +48,52 @@ const Page = () => {
   };
 
   return (
-    <div className="pt-[80px]">
-      <div className="flex items-center justify-center h-[60vh]  bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8]">
-        <div className="flex justify-center gap-[80px] items-center text-black text-left">
+    <div className="">
+      <div className="flex items-center justify-center h-fit bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8] pt-[80px] ">
+        <div className="flex flex-col md:flex-row justify-center gap-x-[100px] gap-y-10 items-center text-black text-left max-w-6xl mx-auto py-[50px] ">
           <Avatar imageURL="/statue.png"></Avatar>
-          <div className="flex flex-col gap-4">
+          <div className="text-center md:text-left flex flex-col justify-center px-7">
             <p
-              className={` text-black font-bold ${space_grotesk.className}  text-5xl `}
+              className={`text-black font-bold text-4xl md:text-5xl ${space_grotesk.className}`}
             >
-              Hello I&apos;m Divyakrishnan
+              Hello I'm Divyakrishnan
             </p>
-
             <p
-              className={` text-black font-bold ${space_grotesk.className}  text-xl `}
+              className={`text-black font-bold text-xl md:text-2xl ${space_grotesk.className}`}
             >
               WEB / APP DEVELOPER
             </p>
-            <p className="text-lg ml-1 w-[700px] text-[black] font-normal">
+            <p className="text-lg md:text-xl text-black font-normal mt-4 md:mt-6 max-w-lg">
               Highly adaptable Full Stack Developer and Mobile App Developer
               with a discerning eye for design and aesthetics. Proficient in
               various programming languages and frameworks, lead and
               collaborated with diverse teams. Enthusiastic and creative-minded
               developer known for rapid learning and innovation.
             </p>
-            <div className="flex gap-4 w-fit">
+            <div className="flex justify-center md:justify-start lg:justify-start gap-4 mt-4 md:mt-6 ">
               <Link href="https://github.com/krishnan74/">
                 <img src="/git.png" alt="" height={30} width={30} />
               </Link>
-
               <Link href="https://www.linkedin.com/in/divyakrishnan-r/">
                 <img src="/linked.png" alt="" height={30} width={30} />
               </Link>
-
               <Link href="https://twitter.com/Krishna29371748">
                 <img src="/twitter.png" alt="" height={30} width={30} />
               </Link>
             </div>
-
-            <div className="">
+            <div className="mt-6">
               <Link
                 href="/Resume.pdf"
                 alt="PDF file of my resume"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="primary-btn text-white px-5 py-[10px] mr-5 bg-[#212121]"
+                className="primary-btn text-white px-5 py-3 md:py-4 md:px-8 mr-5 bg-[#212121]"
               >
                 Download CV
               </Link>
               <button
                 onClick={() => setShowContact(true)}
-                className="secondary-btn border border-black px-5 py-[6.5px]"
+                className="secondary-btn border border-black px-5 py-2 md:py-3 md:px-8"
               >
                 Get in Touch
               </button>
@@ -110,15 +104,12 @@ const Page = () => {
 
       <div className="h-10"></div>
       <Skills />
-
-      <div className="h-[50px]"></div>
-
+      <div className="h-10 md:h-5"></div>
       <div className="flex justify-center">
         <button onClick={scrollDownSmooth}>
           <GoChevronDown color="white" size={30} />
         </button>
       </div>
-
       {showBackToTop && (
         <button
           onClick={handleBackToTop}
@@ -127,19 +118,15 @@ const Page = () => {
           <PiArrowUp />
         </button>
       )}
-
       <p
         id="projects"
-        className={`flex justify-center  items-center text-white   ${space_grotesk.className} text-5xl mb-[65px] underline pt-[80px] `}
+        className={`flex justify-center items-center text-white text-4xl md:text-5xl mb-10 md:mb-20 underline pt-20 ${space_grotesk.className}`}
       >
         Projects
       </p>
       <div className="flex justify-center z-0">
-        <Projects></Projects>
+        <Projects />
       </div>
-
-      <div className="h-20"></div>
-
       <div
         className={`fixed top-60 left-[33.5vw] z-20 ${
           showContact ? "block" : "hidden"
@@ -148,7 +135,8 @@ const Page = () => {
         <Contact callBack={setShowContact} />
       </div>
 
-      <Footer></Footer>
+      <div className="h-10"></div>
+      <Footer />
     </div>
   );
 };
