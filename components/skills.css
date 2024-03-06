@@ -1,7 +1,14 @@
-.image-wrapper{
-    margin: 0px 80px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.image-wrapper {
+  margin: 0px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 460px) {
+  .image-wrapper {
+    transform: scale(0.8);
+    margin: 0px 40px;
+  }
 }

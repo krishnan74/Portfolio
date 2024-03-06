@@ -3,7 +3,7 @@ import React from "react";
 const Avatar = (props) => {
   return (
     <div
-      className=" w-[400px] h-[400px] border-2 border-[#212121] overflow-hidden"
+      className=" w-[70%] h-[400px] max-w-[400px] border-2 border-[#212121] overflow-hidden"
       style={{ boxShadow: "5px 5px 0px 0px #212121" }}
     >
       <img
