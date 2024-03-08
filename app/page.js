@@ -54,7 +54,7 @@ const Page = () => {
           <Avatar imageURL="/statue.png"></Avatar>
           <div className="text-center md:text-left flex flex-col justify-center px-7">
             <p
-              className={`text-black font-bold text-4xl md:text-5xl ${space_grotesk.className}`}
+              className={`text-black font-bold text-3xl md:text-5xl ${space_grotesk.className}`}
             >
               Hello I&apos;m Divyakrishnan
             </p>
@@ -63,7 +63,7 @@ const Page = () => {
             >
               WEB / APP DEVELOPER
             </p>
-            <p className="text-lg md:text-xl text-black font-normal mt-4 md:mt-6 max-w-lg">
+            <p className="text-md md:text-xl text-black font-normal mt-4 md:mt-6 max-w-lg">
               Highly adaptable Full Stack Developer and Mobile App Developer
               with a discerning eye for design and aesthetics. Proficient in
               various programming languages and frameworks, lead and

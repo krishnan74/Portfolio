@@ -1,23 +1,34 @@
 import React from "react";
 import ProjectTimelineCard from "@/app/projects/ProjectTimelineCard";
+import Footer from "@/components/Footer";
+
+import { Space_Grotesk } from "next/font/google";
+const space_grotesk = Space_Grotesk({ subsets: ["latin"], weight: "300" });
 
 const ProjectPage = () => {
   return (
-    <div className="flex flex-col pt-[100px] text-white w-full ">
-      <div className="h-10"></div>
-      <ProjectTimelineCard
-        count="odd"
-        projectName="Tangled"
-        projectDescription="A Decentralized healthcare platform made on XRP Ledger
+    <div className="flex flex-col pt-[120px] text-white w-full gap-y-[20vh]">
+      <div className="flex flex-col ">
+        <p
+          className={`text-2xl text-center mb-[100px]  ${space_grotesk.className} px-[10%]`}
+        >
+          Discover the awesomeness in my portfolio! Check out all the cool stuff
+          I've worked on, and don't miss the visual demos that bring each
+          project to life. It's a showcase filled with creativity, innovation,
+          and a whole lot of fun!
+        </p>
+        <ProjectTimelineCard
+          count="odd"
+          projectName="Tangled"
+          projectDescription="A Decentralized healthcare platform made on XRP Ledger
 where users can sell and buy their products without any
 middleman."
-        techStack1="Next JS"
-        techStack2="Solidity"
-        techStack3="Supabase"
-        projectPic="/images/tangled.png"
-      />
-
-      <div className="h-10"></div>
+          techStack1="Next JS"
+          techStack2="Solidity"
+          techStack3="Supabase"
+          projectPic="/images/tangled.png"
+        />
+      </div>
 
       <ProjectTimelineCard
         count="even"
@@ -33,8 +44,6 @@ Hollywood movie (Back To The Future) made on Flow chain.
         backImage="/images/back-to-the-future2.png"
       />
 
-      <div className="h-10"></div>
-
       <ProjectTimelineCard
         count="odd"
         projectName="XRP-Commerce"
@@ -46,8 +55,6 @@ middleman."
         techStack3="Supabase"
         projectPic="/images/xrp-commerce.png"
       />
-
-      <div className="h-10"></div>
 
       <ProjectTimelineCard
         count="even"
@@ -61,8 +68,6 @@ the middlemen."
         projectPic="/images/own-your-tune.png"
       />
 
-      <div className="h-10"></div>
-
       <ProjectTimelineCard
         count="odd"
         projectName="Weather UI Clone"
@@ -72,8 +77,6 @@ the middlemen."
         techStack3="UI/ UX Design"
         projectPic="/images/weather-css.png"
       />
-
-      <div className="h-10"></div>
 
       <ProjectTimelineCard
         count="even"
@@ -86,8 +89,6 @@ people to the LICET's infrastructure."
         projectPic="/images/licet-map.png"
       />
 
-      <div className="h-10"></div>
-
       <ProjectTimelineCard
         count="odd"
         projectName="GPT Learn"
@@ -99,7 +100,8 @@ the middlemen."
         techStack3="web3.js"
         projectPic="/images/gpt-learn2.png"
       />
-      <div className="h-[120px]"></div>
+
+      <Footer />
     </div>
   );
 };

@@ -10,7 +10,7 @@ const ProjectTimelineCard = (props) => {
   const [showDemo, setShowDemo] = useState(true);
 
   return props.count == "even" ? (
-    <div className="flex gap-[50px] items-center justify-center h-[97vh]">
+    <div class="flex gap-[50px] items-center justify-center h-fit flex-wrap">
       <div className="flex flex-col justify-between h-[450px] w-[350px] ">
         <div>
           <p className={`text-4xl tracking-widest  ${space_grotesk.className}`}>
@@ -38,7 +38,7 @@ const ProjectTimelineCard = (props) => {
       </div>
 
       <div
-        className="h-[500px] w-[800px] projectPic-div "
+        className="h-[500px] w-[95%] max-w-[800px] projectPic-div "
         // onMouseEnter={() => setShowDemo(true)}
         // onMouseLeave={() => setShowDemo(false)}
       >
@@ -47,7 +47,7 @@ const ProjectTimelineCard = (props) => {
             <img
               src={props.projectPic}
               alt=""
-              className="object-cover rounded-lg h-[500px] w-[800px]"
+              className="object-cover rounded-lg h-[500px] w-[100%]"
             />
           </div>
           {/* <div className="card-back">
@@ -61,15 +61,15 @@ const ProjectTimelineCard = (props) => {
       </div>
     </div>
   ) : (
-    <div className="flex  gap-[50px] items-center  justify-center">
+    <div className="flex  gap-[50px] items-center  justify-center flex-wrap">
       <div
-        className="h-[500px] w-[800px]"
+        className="h-[500px] w-[95%] max-w-[800px]"
         // onMouseEnter={() => setShowDemo(true)}
         // onMouseLeave={() => setShowDemo(false)}
       >
         <img
           src={props.projectPic}
-          className={`h-[500px] w-[800px] ${
+          className={`h-[500px] w-[100%] ${
             showDemo ? "block" : "hidden"
           } object-cover rounded-lg`}
         ></img>
