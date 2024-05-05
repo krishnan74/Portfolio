@@ -43,7 +43,11 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div className={`md:hidden ${showContact ? "block" : "hidden"}`}>
+      <div
+        className={`fixed top-60 left-[33.5vw] z-20 ${
+          showContact ? "block" : "hidden"
+        }`}
+      >
         <Contact callBack={setShowContact} />
       </div>
     </div>

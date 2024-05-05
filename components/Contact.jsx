@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { RxCross1 } from "react-icons/rx";
-
+import { toast } from "react-toastify";
 const Contact = (props) => {
   const form = useRef();
 
@@ -18,9 +18,12 @@ const Contact = (props) => {
       .then(
         (result) => {
           console.log(result.text);
+          toast.success("Email sent successfully");
+          props.callBack(false);
         },
         (error) => {
           console.log(error.text);
+          toast.success("Please try again later");
         }
       );
   };
@@ -28,7 +31,10 @@ const Contact = (props) => {
   return (
     <form
       ref={form}
-      onSubmit={sendEmail}
+      onSubmit={(e) => {
+        e.preventDefault(); // Prevents the default form submission behavior
+       
+      }}
       style={{ boxShadow: "5px 5px 1px 0px rgba(0, 0, 0, 0.75)" }}
       className="flex flex-col bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8] border  border-black h-fit w-[500px] p-10 text-black "
     >
@@ -41,15 +47,20 @@ const Contact = (props) => {
       </button>
 
       <label>Name</label>
+
+      <input type="hidden" name="to_name" id="to_name" value="Divyakrishnan" />
+
       <input
         type="text"
-        name="user_name"
+        name="from_name"
+        id="from_name"
         className="pl-1 bg-[rgb(244,244,244)] border-2 border-white"
       />
       <label>Email</label>
       <input
         type="email"
-        name="user_email"
+        id="from_email"
+        name="from_email"
         className="pl-1 bg-[rgb(244,244,244)] border-2 border-white"
       />
       <label>Message</label>
@@ -63,6 +74,7 @@ const Contact = (props) => {
         className="mt-3 px-5 py-3 bg-black text-white cursor-pointer"
         type="submit"
         value="Send"
+        onClick={sendEmail} // Attach the event handler here
       />
     </form>
   );
