@@ -81,12 +81,12 @@ people to the LICET's infrastructure.
       ></ProjectCard>
 
       <ProjectCard
-        projectName="Banking"
-        projectDescription="A banking system website developed for GRIP internship task. The website contains a list of customers along with their account balance and transaction function."
-        techStack1="XAMPP"
-        techStack2="PHP"
-        techStack3="MySQL"
-        projectURL="https://github.com/krishnan74/banking-system"
+        projectName="Chennai Connects"
+        projectDescription="A promotional website for a event managment firm ( Client Project )"
+        techStack1="ReactJS"
+        techStack2="TailwindCSS"
+        techStack3="MongoDB"
+        projectURL="https://www.chennaiconnects.in/"
       ></ProjectCard>
 
       <ProjectCard
