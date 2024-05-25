@@ -70,9 +70,9 @@ const ProjectPage = () => {
       <div className="flex flex-col ">
         <p className="text-2xl text-center mb-[100px] px-[10%]">
           Discover the awesomeness in my portfolio! Check out all the cool stuff
-          I've worked on, and don't miss the visual demos that bring each
-          project to life. It's a showcase filled with creativity, innovation,
-          and a whole lot of fun!
+          I&apos;ve worked on, and don&apos;t miss the visual demos that bring
+          each project to life. It&apos;s a showcase filled with creativity,
+          innovation, and a whole lot of fun!
         </p>
         <div className="flex flex-col gap-y-[20vh]">
           {projects.map((project, index) => (
