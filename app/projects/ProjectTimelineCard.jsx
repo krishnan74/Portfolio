@@ -94,10 +94,12 @@ const ProjectTimelineCard = (props) => {
             <p>{props.techStack2}</p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="w-[12px] h-[12px] inline-block border-2 border-solid rounded-full ml-2 bg-green-500 border-green-600"></span>
-            <p>{props.techStack3}</p>
-          </div>
+          {props.techStack3 && (
+            <div className="flex items-center gap-3">
+              <span className="w-[12px] h-[12px] inline-block border-2 border-solid rounded-full ml-2 bg-green-500 border-green-600"></span>
+              <p>{props.techStack3}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,41 +1,45 @@
-import React from "react";
+ import React from "react";
 import ProjectTimelineCard from "@/app/projects/ProjectTimelineCard";
 import Footer from "@/components/Footer";
 
 const projects = [
   {
     projectName: "Tangled",
-    projectDescription: "A Decentralized healthcare platform made on XRP Ledger where users can sell and buy their products without any middleman.",
+    projectDescription:
+      "A Decentralized healthcare platform made on XRP Ledger where users can sell and buy their products without any middleman.",
     techStack1: "Next JS",
     techStack2: "Solidity",
     techStack3: "Supabase",
-    projectPic: "/images/tangled.png"
+    projectPic: "/images/tangled.png",
   },
   {
     projectName: "Back To The Future",
-    projectDescription: "A Web3 RPG game based on the famous Hollywood movie (Back To The Future) made on Flow chain.",
+    projectDescription:
+      "A Web3 RPG game based on the famous Hollywood movie (Back To The Future) made on Flow chain.",
     techStack1: "Unity (C#)",
     techStack2: "Flow Blockchain",
     techStack3: "Flow Unity SDK",
     projectPic: "/images/back-to-the-future.png",
     frontImage: "/images/back-to-the-future.png",
-    backImage: "/images/back-to-the-future2.png"
+    backImage: "/images/back-to-the-future2.png",
   },
   {
     projectName: "XRP-Commerce",
-    projectDescription: "A Decentralized ECommerce platform made on XRP Ledger where users can sell and buy their products without any middleman.",
+    projectDescription:
+      "A Decentralized ECommerce platform made on XRP Ledger where users can sell and buy their products without any middleman.",
     techStack1: "Next JS",
     techStack2: "XRPL",
     techStack3: "Supabase",
-    projectPic: "/images/xrp-commerce.png"
+    projectPic: "/images/xrp-commerce.png",
   },
   {
     projectName: "Own Your Tune",
-    projectDescription: "A Web3 music streaming dApp for music artists to sell their music albums directly to the listeners by eliminating the middlemen.",
+    projectDescription:
+      "A Web3 music streaming dApp for music artists to sell their music albums directly to the listeners by eliminating the middlemen.",
     techStack1: "React JS",
     techStack2: "Solidity",
     techStack3: "web3.js",
-    projectPic: "/images/own-your-tune.png"
+    projectPic: "/images/own-your-tune.png",
   },
   {
     projectName: "Weather UI Clone",
@@ -43,26 +47,27 @@ const projects = [
     techStack1: "React JS",
     techStack2: "TailwindCSS",
     techStack3: "UI/ UX Design",
-    projectPic: "/images/weather-css.png"
+    projectPic: "/images/weather-css.png",
   },
   {
     projectName: "LICET - MAP",
-    projectDescription: "A Mobile application to navigate and familiarize people to the LICET's infrastructure.",
+    projectDescription:
+      "A Mobile application to navigate and familiarize people to the LICET's infrastructure.",
     techStack1: "Flutter",
     techStack2: "MongoDB",
     techStack3: "Express",
-    projectPic: "/images/licet-map.png"
+    projectPic: "/images/licet-map.png",
   },
   {
     projectName: "GPT Learn",
-    projectDescription: "A Web3 music streaming dApp for music artists to sell their music albums directly to the listeners by eliminating the middlemen.",
-    techStack1: "React JS",
-    techStack2: "Solidity",
-    techStack3: "web3.js",
-    projectPic: "/images/gpt-learn2.png"
-  }
+    projectDescription:
+      "GPT-Learn is an AI-driven platform offering tailored courses, summaries, interactive learning with AI chatbots, and regional translation. It enhances education with personalized content and upcoming quizzes for an engaging, accessible experience.",
+    techStack1: "Openweaver Studio",
+    techStack2: "Open AI API",
+    techStack3: "",
+    projectPic: "/images/gpt-learn2.png",
+  },
 ];
-
 
 const ProjectPage = () => {
   return (
