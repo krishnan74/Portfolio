@@ -44,7 +44,7 @@ const Navbar = () => {
       </div>
 
       <div
-        className={`fixed top-60 left-[33.5vw] z-20 ${
+        className={`fixed flex justify-center w-[100vw] top-60  z-20 ${
           showContact ? "block" : "hidden"
         }`}
       >

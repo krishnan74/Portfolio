@@ -33,10 +33,9 @@ const Contact = (props) => {
       ref={form}
       onSubmit={(e) => {
         e.preventDefault(); // Prevents the default form submission behavior
-       
       }}
       style={{ boxShadow: "5px 5px 1px 0px rgba(0, 0, 0, 0.75)" }}
-      className="flex flex-col bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8] border  border-black h-fit w-[500px] p-10 text-black "
+      className="flex flex-col bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8] border  border-black h-fit w-[500px] p-10 text-black left-[33.5vw] "
     >
       <p className="text-center">Send me an email </p>
       <button
