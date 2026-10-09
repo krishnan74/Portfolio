@@ -68,6 +68,7 @@ module.exports = {
       hero: "var(--leading-hero)",
       tight: "var(--leading-tight)",
       snug: "var(--leading-snug)",
+      lede: "var(--leading-lede)",
       body: "var(--leading-body)",
     },
     borderRadius: {
@@ -92,6 +93,7 @@ module.exports = {
       slow: "var(--dur-slow)",
     },
     extend: {
+      minHeight: ({ theme }) => theme("spacing"),
       maxWidth: {
         page: "var(--max-w)",
         measure: "var(--measure)",

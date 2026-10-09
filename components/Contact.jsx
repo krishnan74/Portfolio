@@ -1,81 +1,98 @@
-import React, { useRef } from "react";
+"use client";
+
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { RxCross1 } from "react-icons/rx";
-const Contact = (props) => {
-  const form = useRef();
+import { profile, socials } from "@/data/profile";
 
-  const sendEmail = (e) => {
+const EMAILJS = {
+  service: "service_0g0a115",
+  template: "template_tgyj4gx",
+  publicKey: "HGMQnDzaGpcAIG_Nu",
+};
+
+const messages = {
+  sent: "Message sent. I'll reply to the email address you gave.",
+  error: "Your message didn't send. Check your connection and try again, or email me directly.",
+};
+
+export default function Contact() {
+  const form = useRef(null);
+  const [status, setStatus] = useState("idle");
+  const [copied, setCopied] = useState(false);
+
+  const onSubmit = async (e) => {
     e.preventDefault();
+    setStatus("sending");
+    try {
+      await emailjs.sendForm(EMAILJS.service, EMAILJS.template, form.current, EMAILJS.publicKey);
+      form.current.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
+  };
 
-    emailjs
-      .sendForm(
-        "service_0g0a115",
-        "template_tgyj4gx",
-        form.current,
-        "HGMQnDzaGpcAIG_Nu"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          
-          props.callBack(false);
-        },
-        (error) => {
-          console.log(error.text);
-          
-        }
-      );
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {}
   };
 
   return (
-    <form
-      ref={form}
-      onSubmit={(e) => {
-        e.preventDefault(); // Prevents the default form submission behavior
-      }}
-      style={{ boxShadow: "5px 5px 1px 0px rgba(0, 0, 0, 0.75)" }}
-      className="flex flex-col bg-gradient-to-r from-[#E8D6E3] via-[#E9DDF1] to-[#E9E4F8] border  border-black h-fit w-[500px] p-10 text-black left-[33.5vw] "
-    >
-      <p className="text-center">Send me an email </p>
-      <button
-        onClick={() => props.callBack(false)}
-        className="relative bottom-10 left-[415px]"
-      >
-        <RxCross1 size={20} />
-      </button>
+    <section id="contact" aria-labelledby="contact-title" className="shell py-section">
+      <div className="grid gap-8 border-t border-line pt-5 lg:grid-cols-12 lg:gap-x-5">
+        <div className="lg:col-span-6">
+          <h2 id="contact-title" className="font-display text-step-5 font-bold">
+            Get in touch
+          </h2>
+          <p className="mt-5 max-w-measure text-step-1 leading-lede text-muted">
+            Send a message here or email me directly.
+          </p>
+          <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <a href={`mailto:${profile.email}`} className="contact-email font-display text-step-2 font-bold">
+              {profile.email}
+            </a>
+            <button type="button" onClick={copyEmail} className="link-quiet min-h-7 text-step--1 font-medium">
+              {copied ? "Copied" : "Copy email"}
+            </button>
+          </div>
+          <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2">
+            {socials.map((s) => (
+              <li key={s.label}>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" className="link-underline">
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <label>Name</label>
-
-      <input type="hidden" name="to_name" id="to_name" value="Divyakrishnan" />
-
-      <input
-        type="text"
-        name="from_name"
-        id="from_name"
-        className="pl-1 bg-[rgb(244,244,244)] border-2 border-white"
-      />
-      <label>Email</label>
-      <input
-        type="email"
-        id="from_email"
-        name="from_email"
-        className="pl-1 bg-[rgb(244,244,244)] border-2 border-white"
-      />
-      <label>Message</label>
-      <textarea
-        className="pl-1 bg-[rgb(244,244,244)] border-2 border-white"
-        rows="4"
-        cols="50"
-        name="message"
-      />
-      <input
-        className="mt-3 px-5 py-3 bg-black text-white cursor-pointer"
-        type="submit"
-        value="Send"
-        onClick={sendEmail} // Attach the event handler here
-      />
-    </form>
+        <form ref={form} onSubmit={onSubmit} className="flex flex-col gap-5 lg:col-span-5 lg:col-start-8">
+          <input type="hidden" name="to_name" value={profile.name} />
+          <div className="field">
+            <label htmlFor="from_name">Name</label>
+            <input id="from_name" name="from_name" type="text" autoComplete="name" required />
+          </div>
+          <div className="field">
+            <label htmlFor="from_email">Email</label>
+            <input id="from_email" name="from_email" type="email" autoComplete="email" required />
+          </div>
+          <div className="field">
+            <label htmlFor="message">Message</label>
+            <textarea id="message" name="message" rows={5} required />
+          </div>
+          <div className="flex flex-wrap items-center gap-5">
+            <button type="submit" className="btn" disabled={status === "sending"}>
+              {status === "sending" ? "Sending…" : "Send message"}
+            </button>
+            <p role="status" aria-live="polite" className="text-step--1 text-muted" data-status={status}>
+              {messages[status] ?? ""}
+            </p>
+          </div>
+        </form>
+      </div>
+    </section>
   );
-};
-
-export default Contact;
+}

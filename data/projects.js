@@ -94,7 +94,7 @@ export const projects = [
       "A decentralized eCommerce platform made on XRP Ledger where users can sell and buy their products without any middleman.",
     stack: ["Next JS", "XRPL", "Supabase"],
     url: "https://xrp-ecommerce.vercel.app/",
-    images: ["xrp-commerce", "xrp-commerce2"],
+    images: ["xrp-commerce"],
   },
   {
     slug: "back-to-the-future",
@@ -127,7 +127,7 @@ export const projects = [
     description:
       "An AI-driven platform offering tailored courses, summaries, interactive learning with AI chatbots, and regional translation, with personalized content for an engaging, accessible experience.",
     stack: ["OpenWeaver Studio", "OpenAI API"],
-    images: ["gpt-learn2", "gpt-learn"],
+    images: ["gpt-learn2"],
   },
   {
     slug: "own-your-tune",

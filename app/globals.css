@@ -53,6 +53,7 @@
   --leading-hero: 0.86;
   --leading-tight: 1.02;
   --leading-snug: 1.2;
+  --leading-lede: 1.45;
   --leading-body: 1.62;
   --tracking-hero: -0.045em;
   --tracking-tight: -0.025em;
@@ -453,6 +454,301 @@
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* ------------------------------------------------------------------
+   Sections
+------------------------------------------------------------------ */
+@layer components {
+  /* Award marker: the bubble, in miniature. */
+  .medal {
+    display: inline-block;
+    width: var(--space-3);
+    height: var(--space-3);
+    border-radius: var(--radius-full);
+    background: radial-gradient(
+      circle at 32% 30%,
+      var(--bubble-highlight) 0 12%,
+      var(--bubble-mid) 45%,
+      var(--bubble-shade) 100%
+    );
+  }
+
+  /* Featured project card: lays out by its own width (container query). */
+  .project-card {
+    container: card / inline-size;
+  }
+
+  .card-meta {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  @container card (min-width: 34rem) {
+    .card-meta {
+      grid-template-columns: 1fr auto;
+      column-gap: var(--space-6);
+    }
+
+    .card-meta > :last-child {
+      padding-top: var(--space-1);
+    }
+  }
+
+  .poster {
+    container-type: inline-size;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    aspect-ratio: 3 / 2;
+    padding: var(--space-5);
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-line);
+  }
+
+  .poster-award {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  /* Sized so each name spans the card, whatever its length. */
+  .poster-name {
+    /* Fallback until FitText measures; then it spans the card exactly. */
+    font-size: min(24cqi, calc(150cqi / var(--chars)));
+    line-height: var(--leading-hero);
+    letter-spacing: var(--tracking-hero);
+    padding-bottom: 0.16em; /* room for descenders */
+    white-space: nowrap;
+    transform-origin: left bottom;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .project-card:hover .poster-name,
+  .project-card:focus-within .poster-name {
+    transform: translateY(calc(var(--space-2) * -1)) scale(1.02);
+  }
+
+  .poster-name a {
+    display: block;
+  }
+
+  .fit-text {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .project-card .ext-icon {
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .project-card:hover .ext-icon {
+    transform: translate(2px, -2px);
+  }
+
+  .poster-award .medal {
+    flex-shrink: 0;
+    margin-top: 0.3em;
+  }
+
+  /* Whole card is the link target; the visible name keeps the accessible name. */
+  .card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+  }
+
+  .card-link:focus-visible {
+    outline: none;
+  }
+
+  .card-link:focus-visible::after {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  /* Project index */
+  .index-trigger {
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .index-trigger:hover {
+    color: var(--color-accent);
+  }
+
+  .index-trigger:focus-visible {
+    outline-offset: -2px;
+  }
+
+  .index-icon .index-icon-v {
+    transform-origin: center;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .index-icon[data-open="true"] .index-icon-v {
+    transform: rotate(90deg) scaleX(0);
+  }
+
+  .index-panel:not([hidden]) {
+    animation: hero-fade var(--dur-base) var(--ease-out) both;
+  }
+
+  .index-preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    width: 22rem;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-raise);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+
+  .index-preview[data-visible="true"] {
+    opacity: 1;
+  }
+
+  .index-preview-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  }
+
+  .index-preview-item[data-active="true"] {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Stack marquee */
+  .stack-marquee {
+    border-block: 1px solid var(--color-line);
+    padding-block: var(--space-5);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+
+  .stack-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-inline: var(--space-6);
+    color: var(--color-muted);
+    font-size: var(--step-1);
+    white-space: nowrap;
+  }
+
+  .stack-icon {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  /* About */
+  .about-portrait {
+    max-width: 28rem;
+    /* The source crop ends in hard edges; let it dissolve into the page. */
+    -webkit-mask-image: radial-gradient(110% 85% at 38% 32%, #000 52%, transparent 78%);
+    mask-image: radial-gradient(110% 85% at 38% 32%, #000 52%, transparent 78%);
+  }
+
+  /* Contact form */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .field label {
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    min-height: var(--space-7);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-fg);
+    font: inherit;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .field textarea {
+    resize: vertical;
+  }
+
+  .field input:hover,
+  .field textarea:hover {
+    border-color: var(--color-muted);
+  }
+
+  .field input:focus-visible,
+  .field textarea:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 0;
+    border-color: transparent;
+    border-radius: var(--radius-md);
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  [data-status="sent"] {
+    color: var(--color-fg);
+  }
+
+  .contact-email {
+    overflow-wrap: anywhere;
+    background-image: linear-gradient(var(--color-accent), var(--color-accent));
+    background-size: 0 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size var(--dur-base) var(--ease-out);
+  }
+
+  .contact-email:hover {
+    background-size: 100% 2px;
+  }
+}
+
+/* Index expand: rows glide, the rest of the page doesn't crossfade. */
+html.vt-index::view-transition-old(root) {
+  animation: none;
+  opacity: 0;
+}
+
+html.vt-index::view-transition-new(root) {
+  animation: none;
+}
+
+html.vt-index::view-transition-group(*) {
+  animation-duration: var(--dur-base);
+  animation-timing-function: var(--ease-out);
+}
+
+html.vt-index::view-transition-old(*),
+html.vt-index::view-transition-new(*) {
+  height: 100%;
+  object-fit: none;
+  object-position: top;
 }
 
 html:has(.menu-sheet[open]) {

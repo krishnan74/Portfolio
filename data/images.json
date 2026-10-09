@@ -1,0 +1,74 @@
+{
+  "tangled": {
+    "width": 1185,
+    "height": 673,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "xrp-commerce": {
+    "width": 1200,
+    "height": 673,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "back-to-the-future": {
+    "width": 1170,
+    "height": 628,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "back-to-the-future2": {
+    "width": 1170,
+    "height": 628,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "gpt-learn2": {
+    "width": 1185,
+    "height": 633,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "own-your-tune": {
+    "width": 1185,
+    "height": 660,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "licet-map": {
+    "width": 683,
+    "height": 683,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "weather-css": {
+    "width": 1200,
+    "height": 673,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "statue": {
+    "width": 500,
+    "height": 501,
+    "widths": [
+      320,
+      500
+    ]
+  }
+}

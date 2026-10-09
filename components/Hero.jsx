@@ -180,7 +180,7 @@ export default function Hero() {
 
         <div className="hero-meta grid gap-6 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
-            <p className="max-w-measure text-step-1 leading-snug md:text-step-2">{profile.intro}</p>
+            <p className="max-w-measure text-step-1 leading-lede md:text-step-2">{profile.intro}</p>
             <p className="mt-3 text-muted">{profile.current}</p>
           </div>
           <div className="flex flex-wrap items-center gap-5 lg:col-span-5 lg:justify-end">
