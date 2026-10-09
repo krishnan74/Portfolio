@@ -49,7 +49,7 @@
   --step-3: clamp(1.875rem, 1.6rem + 1.2vw, 2.75rem);
   --step-4: clamp(2.25rem, 1.75rem + 2.2vw, 4rem);
   --step-5: clamp(2.75rem, 1.8rem + 4.2vw, 6rem);
-  --step-hero: clamp(4.5rem, 0.6rem + 17vw, 16rem);
+  --step-hero: clamp(4.5rem, 24vw, 16rem); /* "krishnan" spans the measure until it caps */
   --leading-hero: 0.86;
   --leading-tight: 1.02;
   --leading-snug: 1.2;
@@ -269,6 +269,189 @@
 
   .menu-sheet::backdrop {
     background: transparent;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Hero
+------------------------------------------------------------------ */
+@layer components {
+  .hero {
+    --lens-zoom: 1.18; /* keep in sync with ZOOM in Hero.jsx */
+    --bubble-size: clamp(8.5rem, 4rem + 19vw, 24rem);
+    --bubble-ink: #16161a;
+    position: relative;
+    overflow: clip;
+  }
+
+  .hero-title,
+  .hero-lens-copy {
+    line-height: var(--leading-hero);
+  }
+
+  /* Flex column so the lines' negative margins add up instead of collapsing. */
+  .hero-stack {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-line {
+    display: flex;
+    /* Extra room so the reveal mask doesn't crop ascenders/descenders. */
+    overflow: clip;
+    padding-block: 0.1em 0.16em;
+    margin-block: -0.1em -0.16em;
+  }
+
+  .hero-line-inner {
+    display: inline-block;
+  }
+
+  .hero-char {
+    display: inline-block;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--space-7);
+    padding-inline: var(--space-5);
+    border-radius: var(--radius-full);
+    background-color: var(--color-fg);
+    color: var(--color-bg);
+    font-weight: 500;
+    transition: transform var(--dur-base) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .btn:hover {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .link-underline {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--space-7);
+    font-weight: 500;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 calc(50% + 0.75em);
+    background-repeat: no-repeat;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .link-underline:hover {
+    color: var(--color-accent);
+  }
+
+  .hero-lens-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-lens {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--bubble-size);
+    height: var(--bubble-size);
+    will-change: transform;
+    /* Hidden until JS has measured and positioned it. */
+    visibility: hidden;
+  }
+
+  .hero[data-lens="ready"] .hero-lens {
+    visibility: visible;
+  }
+
+  .hero-bubble {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    background: radial-gradient(
+      circle at 34% 30%,
+      var(--bubble-highlight) 0,
+      var(--bubble-mid) 42%,
+      var(--bubble-shade) 100%
+    );
+    box-shadow: var(--shadow-bubble);
+    isolation: isolate;
+  }
+
+  /* Specular highlight sits above the magnified type. */
+  .hero-bubble::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 30% 24%, rgb(255 255 255 / 0.7) 0 6%, transparent 18%),
+      radial-gradient(circle at 70% 78%, rgb(255 255 255 / 0.18) 0 10%, transparent 30%);
+    box-shadow: inset -0.5rem -0.8rem 1.6rem rgb(120 20 70 / 0.35);
+  }
+
+  .hero-lens-copy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: calc(var(--step-hero) * var(--lens-zoom));
+    color: var(--bubble-ink);
+    opacity: 0.88;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-title .hero-char {
+    animation: hero-rise var(--dur-slow) var(--ease-out) both;
+    animation-delay: calc(var(--i) * 35ms + 80ms);
+  }
+
+  .hero-meta {
+    animation: hero-fade var(--dur-slow) var(--ease-out) 520ms both;
+  }
+
+  .hero-bubble {
+    animation: bubble-pop 900ms cubic-bezier(0.34, 1.56, 0.64, 1) 620ms both;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-3));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bubble-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
