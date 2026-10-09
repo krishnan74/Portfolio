@@ -39,6 +39,7 @@
   --section-y: clamp(6rem, 3rem + 10vw, 12rem);
   --nav-h: 4rem;
   --max-w: 90rem; /* 1440 */
+  --hero-min: min(100svh, 64rem); /* full screen, but composed on tall monitors */
   --measure: 64ch;
 
   /* type: major third (1.25), fluid between 360px and 1440px */
@@ -74,6 +75,16 @@
   --dur-fast: 160ms;
   --dur-base: 320ms;
   --dur-slow: 700ms;
+}
+
+/* Ultra-wide: a wider measure and larger caps so the page doesn't float. */
+@media (min-width: 1920px) {
+  :root {
+    --max-w: 112rem;
+    --step-hero: 20rem;
+    --step-5: 7rem;
+    --step-4: 4.5rem;
+  }
 }
 
 @media (prefers-color-scheme: light) {

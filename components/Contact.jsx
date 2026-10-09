@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 import { profile, socials } from "@/data/profile";
 
 const EMAILJS = {
@@ -24,6 +23,8 @@ export default function Contact() {
     e.preventDefault();
     setStatus("sending");
     try {
+      // Loaded on demand so it stays out of the initial bundle.
+      const { default: emailjs } = await import("@emailjs/browser");
       await emailjs.sendForm(EMAILJS.service, EMAILJS.template, form.current, EMAILJS.publicKey);
       form.current.reset();
       setStatus("sent");

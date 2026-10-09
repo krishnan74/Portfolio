@@ -28,15 +28,28 @@ export default function FitText({ children, max = Infinity }) {
       }
     };
 
-    fit();
-    // Re-fit once the webfont replaces the fallback.
-    document.fonts?.ready.then(fit);
-    document.fonts?.addEventListener("loadingdone", fit);
-    const observer = new ResizeObserver(fit);
-    observer.observe(box);
+    // Fit only once the card nears the viewport, keeping the measuring work
+    // off the initial load (the posters sit below the fold).
+    let resize;
+    const onFonts = () => resize && fit();
+    const visible = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        visible.disconnect();
+        fit();
+        resize = new ResizeObserver(fit);
+        resize.observe(box);
+        // Re-fit once the webfont replaces the fallback.
+        document.fonts?.ready.then(onFonts);
+      },
+      { rootMargin: "50% 0px" }
+    );
+    visible.observe(box);
+    document.fonts?.addEventListener("loadingdone", onFonts);
     return () => {
-      observer.disconnect();
-      document.fonts?.removeEventListener("loadingdone", fit);
+      visible.disconnect();
+      resize?.disconnect();
+      document.fonts?.removeEventListener("loadingdone", onFonts);
     };
   }, [max]);
 

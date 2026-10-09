@@ -166,7 +166,7 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className="hero" aria-labelledby="hero-title">
-      <div className="shell flex flex-col justify-between gap-9 pb-9 pt-9 md:pt-10 lg:min-h-svh lg:gap-8">
+      <div className="shell flex flex-col justify-between gap-9 pb-9 pt-9 md:pt-10 lg:min-h-[var(--hero-min)] lg:gap-8">
         <h1
           id="hero-title"
           ref={titleRef}

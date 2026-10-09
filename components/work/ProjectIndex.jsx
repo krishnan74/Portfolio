@@ -124,7 +124,7 @@ export default function ProjectIndex({ projects, headingLevel = 4 }) {
                   <span className="col-span-10 font-display text-step-2 font-bold tracking-tight md:col-span-5">
                     {project.name}
                   </span>
-                  <span className="hidden font-body text-step--1 font-normal tracking-normal text-muted md:col-span-6 md:block">
+                  <span aria-hidden="true" className="hidden font-body text-step--1 font-normal tracking-normal text-muted md:col-span-6 md:block">
                     {project.stack.join(", ")}
                   </span>
                   <span className="col-span-2 justify-self-end md:col-span-1">
@@ -142,7 +142,7 @@ export default function ProjectIndex({ projects, headingLevel = 4 }) {
                       </p>
                     )}
                     <p className="max-w-measure">{project.description}</p>
-                    <p className="text-step--1 text-muted md:hidden">{project.stack.join(", ")}</p>
+                    <p className="text-step--1 text-muted md:sr-only">{project.stack.join(", ")}</p>
                     {project.url && (
                       <a
                         href={project.url}
