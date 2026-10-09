@@ -42,10 +42,12 @@ export default function Contact() {
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="shell py-section">
-      <div className="grid gap-8 border-t border-line pt-5 lg:grid-cols-12 lg:gap-x-5">
+      <div data-reveal="section" className="rule grid gap-8 pt-5 lg:grid-cols-12 lg:gap-x-5">
         <div className="lg:col-span-6">
           <h2 id="contact-title" className="font-display text-step-5 font-bold">
-            Get in touch
+            <span className="reveal-mask">
+              <span className="reveal-mask-inner">Get in touch</span>
+            </span>
           </h2>
           <p className="mt-5 max-w-measure text-step-1 leading-lede text-muted">
             Send a message here or email me directly.

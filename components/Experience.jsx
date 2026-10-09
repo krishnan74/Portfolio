@@ -10,6 +10,7 @@ export default function Experience() {
         {experience.map((job) => (
           <li
             key={`${job.company}-${job.role}`}
+            data-reveal
             className="grid gap-5 border-t border-line py-7 first:border-t-0 first:pt-0 lg:grid-cols-12 lg:gap-x-5"
           >
             <div className="lg:col-span-4">

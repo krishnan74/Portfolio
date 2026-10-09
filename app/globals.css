@@ -163,6 +163,11 @@
    Components (shell)
 ------------------------------------------------------------------ */
 @layer components {
+  /* Anchor jumps land on the section header, not its top padding. */
+  section[id].pt-section {
+    scroll-margin-top: calc(var(--section-y) * -1);
+  }
+
   .shell {
     margin-inline: auto;
     width: 100%;
@@ -340,15 +345,27 @@
     align-items: center;
     min-height: var(--space-7);
     font-weight: 500;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 100% 1px;
-    background-position: 0 calc(50% + 0.75em);
-    background-repeat: no-repeat;
     transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(50% + 0.75em);
+    height: 1px;
+    background-color: currentColor;
+    transform-origin: right;
   }
 
   .link-underline:hover {
     color: var(--color-accent);
+  }
+
+  /* Underline slides out to the right and back in from the left. */
+  .link-underline:hover::after {
+    animation: underline-swap var(--dur-slow) var(--ease-in-out);
   }
 
   .hero-lens-layer {
@@ -421,7 +438,7 @@
   }
 
   .hero-bubble {
-    animation: bubble-pop 900ms cubic-bezier(0.34, 1.56, 0.64, 1) 620ms both;
+    animation: bubble-pop 760ms cubic-bezier(0.34, 1.56, 0.64, 1) 560ms both;
   }
 }
 
@@ -716,16 +733,26 @@
   }
 
   .contact-email {
+    position: relative;
     overflow-wrap: anywhere;
-    background-image: linear-gradient(var(--color-accent), var(--color-accent));
-    background-size: 0 2px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size var(--dur-base) var(--ease-out);
   }
 
-  .contact-email:hover {
-    background-size: 100% 2px;
+  .contact-email::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--space-1) * -1);
+    height: 2px;
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .contact-email:hover::after,
+  .contact-email:focus-visible::after {
+    transform: scaleX(1);
   }
 }
 
@@ -749,6 +776,90 @@ html.vt-index::view-transition-new(*) {
   height: 100%;
   object-fit: none;
   object-position: top;
+}
+
+/* ------------------------------------------------------------------
+   Scroll reveals (enabled by the head script only when motion is allowed)
+------------------------------------------------------------------ */
+@layer components {
+  /* Section rule: a hairline that draws across as the section arrives. */
+  .rule {
+    position: relative;
+  }
+
+  .rule::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background-color: var(--color-line);
+    transform-origin: left;
+  }
+
+  .reveal-mask {
+    display: inline-block;
+    overflow: clip;
+    padding-block: 0.08em 0.14em;
+    margin-block: -0.08em -0.14em;
+    vertical-align: bottom;
+  }
+
+  .reveal-mask-inner {
+    display: inline-block;
+  }
+}
+
+html.reveal-ready:not(.reveal-all) [data-reveal]:not([data-reveal="section"]):not([data-revealed]) {
+  opacity: 0;
+  transform: translateY(var(--space-5));
+}
+
+html.reveal-ready:not(.reveal-all) [data-reveal="section"]:not([data-revealed]).rule::before {
+  transform: scaleX(0);
+}
+
+html.reveal-ready:not(.reveal-all) [data-reveal="section"]:not([data-revealed]) .reveal-mask-inner {
+  transform: translateY(105%);
+}
+
+html.reveal-ready:not(.reveal-all) [data-reveal="section"]:not([data-revealed]) .reveal-after {
+  opacity: 0;
+}
+
+html.reveal-ready [data-reveal] {
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+html.reveal-ready [data-reveal="section"].rule::before {
+  transition: transform 1100ms var(--ease-in-out);
+}
+
+html.reveal-ready [data-reveal="section"] .reveal-mask-inner {
+  transition: transform 900ms var(--ease-out) 180ms;
+}
+
+html.reveal-ready [data-reveal="section"] .reveal-after {
+  transition: opacity var(--dur-slow) var(--ease-out) 420ms;
+}
+
+@keyframes underline-swap {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  45% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  55% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
 }
 
 html:has(.menu-sheet[open]) {

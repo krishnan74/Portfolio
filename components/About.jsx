@@ -8,7 +8,7 @@ export default function About() {
       <SectionHeader id="about-title" title="About" />
 
       <div className="mt-8 grid gap-8 md:mt-9 md:grid-cols-12 md:gap-x-5">
-        <figure className="about-portrait self-start md:col-span-5 lg:col-span-4">
+        <figure data-reveal className="about-portrait self-start md:col-span-5 lg:col-span-4">
           <Picture
             name={profile.portrait}
             alt="Michelangelo's David blowing a pink bubblegum bubble"
@@ -17,7 +17,7 @@ export default function About() {
           />
         </figure>
 
-        <div className="flex flex-col gap-8 md:col-span-7 lg:col-span-7 lg:col-start-6">
+        <div data-reveal style={{ "--reveal-delay": "90ms" }} className="flex flex-col gap-8 md:col-span-7 lg:col-span-7 lg:col-start-6">
           <div className="flex flex-col gap-5">
             {profile.bio.map((para) => (
               <p key={para} className="max-w-measure text-step-1 leading-lede">

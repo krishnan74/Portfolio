@@ -98,14 +98,15 @@ export default function ProjectIndex({ projects, headingLevel = 4 }) {
   return (
     <div className="relative">
       <ul ref={listRef} className="border-b border-line">
-        {projects.map((project) => {
+        {projects.map((project, i) => {
           const isOpen = open.has(project.slug);
           const panelId = `project-${project.slug}`;
           return (
             <li
               key={project.slug}
               className="index-row border-t border-line"
-              style={{ viewTransitionName: `idx-${project.slug}` }}
+              data-reveal
+              style={{ viewTransitionName: `idx-${project.slug}`, "--reveal-delay": `${Math.min(i, 8) * 40}ms` }}
             >
               <Heading>
                 <button

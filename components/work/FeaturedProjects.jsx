@@ -14,8 +14,8 @@ function ExternalIcon() {
 export default function FeaturedProjects({ projects }) {
   return (
     <ul className="grid gap-x-6 gap-y-8 md:grid-cols-2 md:gap-y-9">
-      {projects.map((project) => (
-        <li key={project.slug}>
+      {projects.map((project, i) => (
+        <li key={project.slug} data-reveal style={{ "--reveal-delay": `${(i % 2) * 90}ms` }}>
           <article className="project-card relative">
             <div className="poster" style={{ "--chars": project.name.length }}>
               <div className="flex flex-col gap-2">
