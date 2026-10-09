@@ -59,7 +59,7 @@ export default function StackMarquee() {
   }, []);
 
   return (
-    // Decorative: the full list is in the skill groups below.
+    // Decorative: the full list is in the skill groups.
     <div className="stack-marquee" aria-hidden="true">
       <Marquee play={play} speed={32} pauseOnHover autoFill>
         {marquee.map(({ label, icon }) => {

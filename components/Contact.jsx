@@ -14,7 +14,9 @@ const messages = {
   error: "Your message didn't send. Check your connection and try again, or email me directly.",
 };
 
-export default function Contact() {
+// `first` when it opens the /contact page.
+export default function Contact({ first = false }) {
+  const Heading = first ? "h1" : "h2";
   const form = useRef(null);
   const [status, setStatus] = useState("idle");
   const [copied, setCopied] = useState(false);
@@ -42,14 +44,18 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="shell py-section">
+    <section
+      id="contact"
+      aria-labelledby="contact-title"
+      className={`shell pb-section ${first ? "pt-page" : "pt-section"}`}
+    >
       <div data-reveal="section" className="rule grid gap-8 pt-5 lg:grid-cols-12 lg:gap-x-5">
         <div className="lg:col-span-6">
-          <h2 id="contact-title" className="font-display text-step-5 font-bold">
+          <Heading id="contact-title" className="font-display text-step-5 font-bold">
             <span className="reveal-mask">
               <span className="reveal-mask-inner">Get in touch</span>
             </span>
-          </h2>
+          </Heading>
           <p className="mt-5 max-w-measure text-step-1 leading-lede text-muted">
             Send a message here or email me directly.
           </p>

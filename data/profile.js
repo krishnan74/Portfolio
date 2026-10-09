@@ -24,13 +24,14 @@ export const profile = {
   portrait: "statue",
 };
 
+// `icon` is a react-icons/fa6 export name, used by the hero.
 export const socials = [
-  { label: "GitHub", href: "https://github.com/krishnan74/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/divyakrishnan-r/" },
-  { label: "X (Twitter)", href: "https://twitter.com/Krishna29371748" },
+  { label: "GitHub", href: "https://github.com/krishnan74/", icon: "FaGithub" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/divyakrishnan-r/", icon: "FaLinkedin" },
+  { label: "X (Twitter)", href: "https://twitter.com/Krishna29371748", icon: "FaXTwitter" },
 ];
 
-// Logos for the stack marquee; `icon` is a react-icons/si export name.
+// Logos for the stack marquee in the hero; `icon` is a react-icons/si export name.
 export const marquee = [
   { label: "AWS", icon: "SiAmazonaws" },
   { label: "Azure", icon: "SiMicrosoftazure" },

@@ -2,20 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import { profile, socials } from "@/data/profile";
 
 const links = [
-  { id: "work", label: "Work" },
-  { id: "experience", label: "Experience" },
-  { id: "about", label: "About" },
-  { id: "contact", label: "Contact" },
+  { href: "/work", label: "Work" },
+  { href: "/experience", label: "Experience" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Nav() {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState(null);
+  const pathname = usePathname();
   const menuRef = useRef(null);
 
   // Hide while scrolling down, reveal on any upward scroll.
@@ -39,22 +40,6 @@ export default function Nav() {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(frame);
     };
-  }, []);
-
-  // Highlight the section currently in the middle of the viewport.
-  useEffect(() => {
-    const sections = links.map((l) => document.getElementById(l.id)).filter(Boolean);
-    if (!sections.length) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
   }, []);
 
   const openMenu = () => menuRef.current?.showModal();
@@ -83,10 +68,10 @@ export default function Nav() {
         <div className="flex items-center gap-2 md:gap-5">
           <ul className="hidden items-center gap-5 md:flex">
             {links.map((link) => (
-              <li key={link.id}>
+              <li key={link.href}>
                 <Link
-                  href={`/#${link.id}`}
-                  aria-current={active === link.id ? "true" : undefined}
+                  href={link.href}
+                  aria-current={pathname === link.href ? "page" : undefined}
                   className="nav-link"
                 >
                   {link.label}
@@ -124,11 +109,12 @@ export default function Nav() {
           </div>
           <ul className="mt-8 flex flex-col gap-3">
             {links.map((link) => (
-              <li key={link.id}>
+              <li key={link.href}>
                 <Link
-                  href={`/#${link.id}`}
+                  href={link.href}
                   onClick={closeMenu}
-                  className="font-display text-step-4 font-bold tracking-tight"
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  className="menu-link font-display text-step-4 font-bold tracking-tight"
                 >
                   {link.label}
                 </Link>

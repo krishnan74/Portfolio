@@ -20,7 +20,7 @@ export default function Picture({ name, alt, sizes = "100vw", className = "", lo
         alt={alt}
         loading={loading}
         decoding="async"
-        fetchpriority={fetchPriority}
+        fetchPriority={fetchPriority}
         className={className}
         style={{ aspectRatio: `${meta.width} / ${meta.height}` }}
       />

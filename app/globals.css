@@ -21,6 +21,10 @@
   --bubble-highlight: #ffe0ef;
   --bubble-mid: #ff8fc4;
   --bubble-shade: #d94f93;
+  /* hero statue card: a lilac plinth that stays light in both themes */
+  --statue-bg: linear-gradient(140deg, #f1dcea 0%, #e6e0f3 100%);
+  --statue-edge: transparent;
+  --statue-shadow: var(--color-accent);
   color-scheme: dark;
 
   /* spacing: 4px base */
@@ -37,6 +41,7 @@
   --space-11: 12rem; /* 192 */
   --gutter: clamp(1rem, 0.4rem + 3vw, 3rem);
   --section-y: clamp(6rem, 3rem + 10vw, 12rem);
+  --page-top: calc(var(--nav-h) + clamp(3rem, 1.5rem + 5vw, 7rem)); /* first section on a page */
   --nav-h: 4rem;
   --max-w: 90rem; /* 1440 */
   --hero-min: min(100svh, 64rem); /* full screen, but composed on tall monitors */
@@ -50,7 +55,6 @@
   --step-3: clamp(1.875rem, 1.6rem + 1.2vw, 2.75rem);
   --step-4: clamp(2.25rem, 1.75rem + 2.2vw, 4rem);
   --step-5: clamp(2.75rem, 1.8rem + 4.2vw, 6rem);
-  --step-hero: clamp(4.5rem, 24vw, 16rem); /* "krishnan" spans the measure until it caps */
   --leading-hero: 0.86;
   --leading-tight: 1.02;
   --leading-snug: 1.2;
@@ -81,7 +85,6 @@
 @media (min-width: 1920px) {
   :root {
     --max-w: 112rem;
-    --step-hero: 20rem;
     --step-5: 7rem;
     --step-4: 4.5rem;
   }
@@ -98,6 +101,8 @@
     --color-accent: #c2347a;
     --color-on-accent: #ffffff;
     --shadow-raise: 0 1.5rem 3.5rem -1.75rem rgb(40 30 40 / 0.25);
+    --statue-edge: #16161a;
+    --statue-shadow: #16161a;
     color-scheme: light;
   }
 }
@@ -112,6 +117,8 @@
   --color-accent: #c2347a;
   --color-on-accent: #ffffff;
   --shadow-raise: 0 1.5rem 3.5rem -1.75rem rgb(40 30 40 / 0.25);
+  --statue-edge: #16161a;
+  --statue-shadow: #16161a;
   color-scheme: light;
 }
 
@@ -177,6 +184,23 @@
   /* Anchor jumps land on the section header, not its top padding. */
   section[id].pt-section {
     scroll-margin-top: calc(var(--section-y) * -1);
+  }
+
+  .next-page {
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .next-page:hover {
+    color: var(--color-accent);
+  }
+
+  .next-arrow {
+    display: inline-block;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .next-page:hover .next-arrow {
+    transform: translateX(var(--space-3));
   }
 
   .shell {
@@ -284,6 +308,10 @@
     }
   }
 
+  .menu-link[aria-current] {
+    color: var(--color-accent);
+  }
+
   .menu-sheet::backdrop {
     background: transparent;
   }
@@ -294,30 +322,147 @@
 ------------------------------------------------------------------ */
 @layer components {
   .hero {
-    --lens-zoom: 1.18; /* keep in sync with ZOOM in Hero.jsx */
-    --bubble-size: clamp(8.5rem, 4rem + 19vw, 24rem);
+    --bubble-size: clamp(7.5rem, 3.5rem + 10vw, 15rem);
     --bubble-ink: #16161a;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: max(100svh, 40rem);
+    padding-top: var(--nav-h);
     overflow: clip;
+  }
+
+  @media (min-width: 1440px) {
+    .hero {
+      min-height: min(100svh, 64rem);
+    }
+  }
+
+  .hero-body {
+    flex: 1;
+    padding-block: var(--space-7) var(--space-8);
+  }
+
+  /* Statue card: a framed plinth with a hard offset shadow. */
+  .hero-figure {
+    width: 100%;
+    max-width: min(26rem, 100%);
+  }
+
+  @media (min-width: 768px) {
+    .hero-figure {
+      max-width: min(32rem, 100%, 62svh);
+    }
+  }
+
+  .statue-card {
+    position: relative;
+    /* The source crop ends flat at the right and bottom; let it meet the frame there. */
+    padding: var(--space-6) 0 0 var(--space-5);
+    overflow: hidden;
+    border: 2px solid var(--statue-edge);
+    border-radius: var(--radius-md);
+    background: var(--statue-bg);
+    box-shadow: 0.625rem 0.625rem 0 var(--statue-shadow);
+  }
+
+  .statue {
+    position: relative;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Sits exactly over the bubble painted in the photo (measured from
+     statue.png); invisible until the gum starts to swell. */
+  .gum {
+    position: absolute;
+    left: 61.2%;
+    top: 57.1%;
+    width: 24.4%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-full);
+    background: radial-gradient(
+      circle at 34% 30%,
+      var(--bubble-highlight) 0,
+      var(--bubble-mid) 45%,
+      var(--bubble-shade) 100%
+    );
+    box-shadow: inset -0.3rem -0.45rem 0.9rem rgb(150 30 90 / 0.45),
+      inset 0.25rem 0.3rem 0.6rem rgb(255 255 255 / 0.35);
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .gum::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 30% 24%, rgb(255 255 255 / 0.75) 0 7%, transparent 20%);
+  }
+
+  .hero-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+    color: var(--color-muted);
+    font-size: var(--step--1);
+    transition: opacity var(--dur-slow) var(--ease-out);
+  }
+
+  .hint-hover {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .hint-hover {
+      display: inline;
+    }
+
+    .hint-touch {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-hint {
+      visibility: hidden;
+    }
+  }
+
+  /* Once someone has found it, the hint steps back. */
+  .hero[data-blown] .hero-hint {
+    opacity: 0;
+  }
+
+  /* The name always sits on one line, sized to fill its column. */
+  .hero-name {
+    container-type: inline-size;
+    margin-top: var(--space-2);
   }
 
   .hero-title,
   .hero-lens-copy {
     line-height: var(--leading-hero);
+    white-space: nowrap;
   }
 
-  /* Flex column so the lines' negative margins add up instead of collapsing. */
-  .hero-stack {
-    display: flex;
-    flex-direction: column;
+  .hero-title {
+    width: fit-content;
+    /* Advance width of "Divyakrishnan" is ~6.3em at these sizes. */
+    font-size: min(100cqi / 6.4, 9rem);
   }
 
   .hero-line {
     display: flex;
     /* Extra room so the reveal mask doesn't crop ascenders/descenders. */
     overflow: clip;
-    padding-block: 0.1em 0.16em;
-    margin-block: -0.1em -0.16em;
+    padding-block: 0.1em 0.18em;
+    margin-block: -0.1em -0.18em;
   }
 
   .hero-line-inner {
@@ -328,26 +473,59 @@
     display: inline-block;
   }
 
+  .hero-meta {
+    margin-top: var(--space-5);
+  }
+
+  .hero-marquee .stack-marquee {
+    border-bottom: 0;
+  }
+
+  .icon-link {
+    display: inline-grid;
+    place-items: center;
+    width: var(--space-7);
+    height: var(--space-7);
+    margin-left: calc(var(--space-3) * -1);
+    margin-right: calc(var(--space-3) * -1 + var(--space-2));
+    border-radius: var(--radius-full);
+    font-size: var(--step-2);
+    transition: color var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+
+  .icon-link:hover {
+    color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
     min-height: var(--space-7);
     padding-inline: var(--space-5);
+    border: 1px solid var(--color-fg);
     border-radius: var(--radius-full);
     background-color: var(--color-fg);
     color: var(--color-bg);
     font-weight: 500;
-    transition: transform var(--dur-base) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+    transition: transform var(--dur-base) var(--ease-out), background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
   }
 
   .btn:hover {
+    border-color: var(--color-accent);
     background-color: var(--color-accent);
     color: var(--color-on-accent);
   }
 
   .btn:active {
     transform: scale(0.97);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-fg);
   }
 
   .link-underline {
@@ -382,6 +560,7 @@
   .hero-lens-layer {
     position: absolute;
     inset: 0;
+    z-index: 1;
     pointer-events: none;
   }
 
@@ -392,12 +571,42 @@
     width: var(--bubble-size);
     height: var(--bubble-size);
     will-change: transform;
-    /* Hidden until JS has measured and positioned it. */
+    /* Hidden until a bubble has been blown (or, with reduced motion, placed). */
     visibility: hidden;
   }
 
-  .hero[data-lens="ready"] .hero-lens {
+  .hero[data-bubble="free"] .hero-lens,
+  .hero[data-bubble="leaving"] .hero-lens,
+  .hero[data-bubble="pop"] .hero-lens,
+  .hero[data-bubble="rest"] .hero-lens {
     visibility: visible;
+  }
+
+  .hero[data-bubble="pop"] .hero-bubble {
+    animation: bubble-burst 240ms var(--ease-out) forwards;
+  }
+
+  /* Droplets thrown off when the bubble pops. */
+  .hero-splash {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-splash i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 7%;
+    aspect-ratio: 1;
+    margin: -3.5%;
+    border-radius: var(--radius-full);
+    background-color: var(--bubble-mid);
+    opacity: 0;
+  }
+
+  .hero[data-bubble="pop"] .hero-splash i {
+    animation: bubble-splash 420ms var(--ease-out) forwards;
   }
 
   .hero-bubble {
@@ -431,7 +640,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    font-size: calc(var(--step-hero) * var(--lens-zoom));
     color: var(--bubble-ink);
     opacity: 0.88;
     will-change: transform;
@@ -441,15 +649,20 @@
 @media (prefers-reduced-motion: no-preference) {
   .hero-title .hero-char {
     animation: hero-rise var(--dur-slow) var(--ease-out) both;
-    animation-delay: calc(var(--i) * 35ms + 80ms);
+    animation-delay: calc(var(--i) * 30ms + 120ms);
   }
 
-  .hero-meta {
-    animation: hero-fade var(--dur-slow) var(--ease-out) 520ms both;
+  .hero-figure {
+    animation: hero-fade var(--dur-slow) var(--ease-out) both;
   }
 
-  .hero-bubble {
-    animation: bubble-pop 760ms cubic-bezier(0.34, 1.56, 0.64, 1) 560ms both;
+  .hero-hello {
+    animation: hero-fade var(--dur-slow) var(--ease-out) 60ms both;
+  }
+
+  .hero-meta,
+  .hero-marquee {
+    animation: hero-fade var(--dur-slow) var(--ease-out) 480ms both;
   }
 }
 
@@ -473,14 +686,29 @@
   }
 }
 
-@keyframes bubble-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.2);
-  }
-  to {
+@keyframes bubble-burst {
+  0% {
     opacity: 1;
     transform: scale(1);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.32);
+  }
+}
+
+@keyframes bubble-splash {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--a)) translateY(calc(var(--bubble-size) * -0.42)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--a)) translateY(calc(var(--bubble-size) * -0.78)) scale(0.4);
   }
 }
 
@@ -535,6 +763,50 @@
     border-radius: var(--radius-lg);
     background-color: var(--color-surface);
     box-shadow: inset 0 0 0 1px var(--color-line);
+  }
+
+  @media (min-width: 768px) {
+    .poster-lead {
+      aspect-ratio: 21 / 9;
+    }
+  }
+
+  /* Image poster: the screenshot or diagram sits whole, centered on the plinth. */
+  .poster-media {
+    position: absolute;
+    /* Tighter frame on narrow cards so the image keeps its size. */
+    inset: clamp(var(--space-3), 4cqi, var(--space-5));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .poster-media picture {
+    display: contents;
+  }
+
+  .poster-media img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-raise);
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .project-card:hover .poster-media img,
+  .project-card:focus-within .poster-media img {
+    transform: translateY(calc(var(--space-2) * -1)) scale(1.015);
+  }
+
+  .card-name {
+    line-height: var(--leading-tight);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .project-card:hover .card-name {
+    color: var(--color-accent);
   }
 
   .poster-award {

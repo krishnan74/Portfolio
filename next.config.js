@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
-    // The old placeholder /about page now lives as a section on the home page.
-    return [{ source: "/about", destination: "/#about", permanent: true }];
+    // The full project list used to live at /projects.
+    return [{ source: "/projects", destination: "/work", permanent: true }];
   },
 };
 

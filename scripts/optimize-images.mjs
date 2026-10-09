@@ -26,6 +26,20 @@ const screenshots = [
 
 const WIDTHS = [720, 1280];
 
+// Featured project images (assets/, not served): already tight, so no crop.
+const photos = {
+  "ens-drive": "assets/images/project pics/ens drive.jpg",
+  perjury: "assets/images/project pics/perjury.jpg",
+  snapads: "assets/images/project pics/snapads.jpg",
+  swapyoursuiiii: "assets/images/project pics/swapyoursuiiii.jpeg",
+  "token-defense": "assets/images/project pics/token defense.png",
+  squidchain: "assets/images/project pics/squidchain.png",
+  citycash: "assets/images/project pics/city cash.png",
+  "whisper-network": "assets/images/project pics/whisper network.jpg",
+  "chennai-connects": "assets/images/project pics/chennai connects.png",
+  castai: "assets/images/project pics/cast-ai.png",
+};
+
 // Where the app's own background is too close to the frame for edge
 // detection, use the window geometry shared by the other screenshots.
 const cropOverrides = {
@@ -96,6 +110,12 @@ for (const name of screenshots) {
   const { width, height } = await encode(cropped, name, WIDTHS);
   manifest[name] = { width, height, widths: WIDTHS };
   console.log(name, crop);
+}
+
+for (const [name, file] of Object.entries(photos)) {
+  const { width, height } = await encode(path.join(root, file), name, WIDTHS);
+  manifest[name] = { width, height, widths: WIDTHS };
+  console.log(name, `${width}x${height}`);
 }
 
 // Portrait: keep transparency.

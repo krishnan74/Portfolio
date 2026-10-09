@@ -1,69 +1,116 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { profile } from "@/data/profile";
+import Link from "next/link";
+import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import Picture from "./Picture";
+import StackMarquee from "./StackMarquee";
+import { profile, socials } from "@/data/profile";
 
-const LINES = ["Divya", "krishnan"];
-// Magnification inside the bubble. Must match --lens-zoom in globals.css.
+const socialIcons = { FaGithub, FaLinkedin, FaXTwitter };
+// Magnification inside the bubble.
 const ZOOM = 1.18;
+// How long the gum has to be hovered (or pressed) before a bubble comes off.
+const CHARGE_MS = 2000;
+const DEFLATE_MS = 350;
+// How long a bubble that has lost the cursor floats before it pops.
+const LEAVE_MS = 900;
+const POP_MS = 420;
+const SPLASH = [0, 45, 90, 135, 180, 225, 270, 315];
 
 function Letters({ stagger = false }) {
-  let i = 0;
-  return LINES.map((line) => (
-    <span key={line} className="hero-line">
+  return (
+    <span className="hero-line">
       <span className="hero-line-inner">
-        {line.split("").map((char, j) => (
-          <span key={j} className="hero-char" style={stagger ? { "--i": i++ } : undefined}>
+        {profile.name.split("").map((char, i) => (
+          <span key={i} className="hero-char" style={stagger ? { "--i": i } : undefined}>
             {char}
           </span>
         ))}
       </span>
     </span>
-  ));
+  );
 }
 
 export default function Hero() {
   const heroRef = useRef(null);
+  const statueRef = useRef(null);
+  const gumRef = useRef(null);
   const titleRef = useRef(null);
   const lensRef = useRef(null);
   const copyRef = useRef(null);
 
+  // The bubble lives in one of these states:
+  //   idle     no bubble; hovering (or pressing) the statue starts charging
+  //   free     blown off the gum, following the cursor (or resting on the name)
+  //   leaving  lost the cursor, floating up until it pops
+  //   pop      bursting, then back to idle
+  //   rest     reduced motion: a still bubble on the name, no interaction
   useEffect(() => {
     const hero = heroRef.current;
+    const statue = statueRef.current;
+    const gum = gumRef.current;
     const title = titleRef.current;
     const lens = lensRef.current;
     const copy = copyRef.current;
-    if (!hero || !title || !lens || !copy) return;
+    if (!hero || !statue || !gum || !title || !lens || !copy) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-    let size = 0; // lens diameter
-    let box = { x: 0, y: 0, w: 0, h: 0 }; // headline box in hero coords
-    let rest = { x: 0, y: 0 };
+    let state = "idle";
+    let size = 0; // lens diameter at scale 1
+    let box = { x: 0, y: 0, w: 0, h: 0 }; // name box in hero coords
+    let rest = { x: 0, y: 0 }; // resting point over the name
+    let mouth = { x: 0, y: 0, d: 0 }; // gum center and diameter in hero coords
     const pos = { x: 0, y: 0 };
     const vel = { x: 0, y: 0 };
-    let target = null; // pointer target (lens center), null = rest
+    let scale = 1;
+    let scaleVel = 0;
+    let target = null; // pointer position in hero coords, null = none
+    let hovering = false; // mouse over the statue
+    let pressing = false; // touch or pen held on the statue
+    let charge = 0; // 0..1
+    let leftAt = 0;
+    let popTimer = 0;
     let frame = 0;
     let last = 0;
     let visible = true;
-    let t0 = performance.now();
+    const t0 = performance.now();
+
+    const setState = (next) => {
+      state = next;
+      hero.dataset.bubble = next;
+    };
 
     const render = () => {
       const c = size / 2;
-      const x = pos.x - c;
-      const y = pos.y - c;
-      lens.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      // Map headline coordinates into lens coordinates, magnified about the
-      // lens center. The copy is already typeset at ZOOM, so only translate.
-      const tx = c + ZOOM * (box.x - x - c);
-      const ty = c + ZOOM * (box.y - y - c);
+      lens.style.transform = `translate3d(${pos.x - c}px, ${pos.y - c}px, 0) scale(${scale})`;
+      // Map name coordinates into lens coordinates, magnified about the lens
+      // center. The copy is typeset at ZOOM and the lens scales about its
+      // center, so only a translate is needed.
+      const tx = c + ZOOM * (box.x - pos.x);
+      const ty = c + ZOOM * (box.y - pos.y);
       copy.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+    };
+
+    const renderGum = (now) => {
+      if (charge <= 0) {
+        gum.style.opacity = "0";
+        gum.style.transform = "translate(-50%, -50%)";
+        return;
+      }
+      // Swells slowly, then faster, with a wobble that grows as it nears release.
+      const eased = charge * charge;
+      const wobble = Math.sin((now - t0) / 55) * 0.035 * charge;
+      gum.style.opacity = String(Math.min(1, charge * 6));
+      gum.style.transform = `translate(-50%, -50%) scale(${1 + eased * 0.55 + wobble}, ${1 + eased * 0.55 - wobble})`;
     };
 
     const measure = () => {
       const heroRect = hero.getBoundingClientRect();
       const titleRect = title.getBoundingClientRect();
+      const gumRect = gum.getBoundingClientRect();
       size = lens.offsetWidth;
       box = {
         x: titleRect.left - heroRect.left,
@@ -71,46 +118,106 @@ export default function Hero() {
         w: titleRect.width,
         h: titleRect.height,
       };
+      copy.style.fontSize = `${parseFloat(getComputedStyle(title).fontSize) * ZOOM}px`;
       copy.style.width = `${box.w * ZOOM}px`;
-      // Rest over the tail of the first line ("ya").
-      const first = title.querySelector(".hero-line-inner").getBoundingClientRect();
-      rest = {
-        x: first.left - heroRect.left + first.width * 0.8,
-        y: first.top - heroRect.top + first.height * 0.55,
+      // Rest over the tail of the name ("an").
+      rest = { x: box.x + box.w * 0.86, y: box.y + box.h * 0.5 };
+      // getBoundingClientRect includes the gum's current scale; its center doesn't move.
+      mouth = {
+        x: gumRect.left + gumRect.width / 2 - heroRect.left,
+        y: gumRect.top + gumRect.height / 2 - heroRect.top,
+        d: gum.offsetWidth,
       };
-      if (!frame || reduce.matches) {
+      if (state === "rest") {
         pos.x = rest.x;
         pos.y = rest.y;
+        scale = 1;
       }
       render();
+    };
+
+    const blow = () => {
+      charge = 0;
+      // The bubble starts as the swollen gum and grows to full size on its way out.
+      pos.x = mouth.x;
+      pos.y = mouth.y;
+      scale = (mouth.d * 1.55) / size;
+      scaleVel = 0;
+      const goal = target && finePointer.matches ? target : rest;
+      const dx = goal.x - pos.x;
+      const dy = goal.y - pos.y;
+      const len = Math.hypot(dx, dy) || 1;
+      vel.x = (dx / len) * 6;
+      vel.y = (dy / len) * 6 - 2;
+      setState("free");
+      hero.dataset.blown = "true";
+      render();
+    };
+
+    const pop = () => {
+      if (state !== "free" && state !== "leaving") return;
+      setState("pop");
+      clearTimeout(popTimer);
+      popTimer = setTimeout(() => {
+        if (state !== "pop") return;
+        setState("idle");
+        // Still on the statue? Start blowing the next one.
+        start();
+      }, POP_MS);
     };
 
     const tick = (now) => {
       frame = 0;
-      const dt = Math.min(48, now - (last || now)) / 16.67;
+      const ms = Math.min(48, now - (last || now));
+      const dt = ms / 16.67;
       last = now;
 
-      let goal = target;
-      if (!goal) {
-        // Idle drift around the resting point.
-        const t = (now - t0) / 1000;
-        const amp = Math.min(box.w, 900) * 0.03;
-        goal = { x: rest.x + Math.sin(t * 0.7) * amp, y: rest.y + Math.cos(t * 0.53) * amp * 0.8 };
+      if (state === "idle") {
+        charge = hovering || pressing
+          ? Math.min(1, charge + ms / CHARGE_MS)
+          : Math.max(0, charge - ms / DEFLATE_MS);
+        if (charge >= 1) blow();
+        renderGum(now);
+      } else if (charge > 0) {
+        charge = 0;
+        renderGum(now);
       }
 
-      // Damped spring toward the goal.
-      const k = 0.06;
-      const damping = Math.pow(0.8, dt);
-      vel.x = (vel.x + (goal.x - pos.x) * k * dt) * damping;
-      vel.y = (vel.y + (goal.y - pos.y) * k * dt) * damping;
-      pos.x += vel.x * dt;
-      pos.y += vel.y * dt;
-      render();
-      if (visible && !document.hidden) frame = requestAnimationFrame(tick);
+      if (state === "free" || state === "leaving") {
+        let goal;
+        if (state === "leaving") {
+          // Buoyant: drift up from wherever it is.
+          goal = { x: pos.x + vel.x * 4, y: pos.y - 40 };
+          if (now - leftAt > LEAVE_MS) pop();
+        } else if (target && finePointer.matches) {
+          goal = target;
+        } else {
+          // Touch: idle drift around the resting point on the name.
+          const t = (now - t0) / 1000;
+          const amp = Math.min(box.w, 900) * 0.03;
+          goal = { x: rest.x + Math.sin(t * 0.7) * amp, y: rest.y + Math.cos(t * 0.53) * amp * 0.8 };
+        }
+
+        // Damped spring toward the goal.
+        const k = state === "leaving" ? 0.01 : 0.06;
+        const damping = Math.pow(0.8, dt);
+        vel.x = (vel.x + (goal.x - pos.x) * k * dt) * damping;
+        vel.y = (vel.y + (goal.y - pos.y) * k * dt) * damping;
+        pos.x += vel.x * dt;
+        pos.y += vel.y * dt;
+
+        // Jelly spring on the size, so it overshoots a little as it inflates.
+        scaleVel = (scaleVel + (1 - scale) * 0.05 * dt) * Math.pow(0.84, dt);
+        scale += scaleVel * dt;
+        render();
+      }
+
+      const busy = state !== "idle" || hovering || pressing || charge > 0;
+      if (busy && visible && !document.hidden) frame = requestAnimationFrame(tick);
     };
 
     const start = () => {
-      if (reduce.matches || frame || !visible) return;
+      if (state === "rest" || frame || !visible) return;
       last = 0;
       frame = requestAnimationFrame(tick);
     };
@@ -119,16 +226,52 @@ export default function Hero() {
       frame = 0;
     };
 
-    const onPointerMove = (e) => {
-      if (!finePointer.matches) return;
+    const toHero = (e) => {
       const r = hero.getBoundingClientRect();
-      const x = e.clientX - r.left;
-      const y = e.clientY - r.top;
-      target = x >= 0 && y >= 0 && x <= r.width && y <= r.height ? { x, y } : null;
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
     };
-    const onPointerLeave = () => {
+
+    // Mouse: hovering the statue charges the gum.
+    const onStatueEnter = (e) => {
+      if (e.pointerType !== "mouse") return;
+      hovering = true;
+      start();
+    };
+    const onStatueLeave = (e) => {
+      if (e.pointerType !== "mouse") return;
+      hovering = false;
+    };
+
+    // Touch and pen: press and hold the statue. Scrolling cancels the press.
+    const onStatueDown = (e) => {
+      if (e.pointerType === "mouse" || state !== "idle") return;
+      pressing = true;
+      start();
+    };
+    const onStatueUp = (e) => {
+      if (e.pointerType === "mouse") return;
+      pressing = false;
+    };
+    const onContextMenu = (e) => {
+      if (state !== "rest") e.preventDefault();
+    };
+
+    const onPointerMove = (e) => {
+      if (e.pointerType !== "mouse") return;
+      target = toHero(e);
+      if (state === "leaving") setState("free");
+    };
+    const onPointerLeave = (e) => {
+      if (e.pointerType !== "mouse") return;
       target = null;
+      hovering = false;
+      if (state === "free") {
+        leftAt = performance.now();
+        setState("leaving");
+      }
     };
+    // Any press in the hero pops a free bubble (links and buttons still work).
+    const onPointerDown = () => pop();
 
     const visibility = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -136,72 +279,134 @@ export default function Hero() {
     });
     const resize = new ResizeObserver(measure);
     const onVisibility = () => (document.hidden ? stop() : start());
-    const onReduceChange = () => {
+    const applyMotion = () => {
       stop();
+      clearTimeout(popTimer);
+      charge = 0;
+      pressing = false;
+      renderGum(0);
+      setState(reduce.matches ? "rest" : "idle");
       measure();
-      start();
     };
 
     document.fonts?.ready.then(measure);
-    measure();
+    applyMotion();
     resize.observe(hero);
     visibility.observe(hero);
+    statue.addEventListener("pointerenter", onStatueEnter);
+    statue.addEventListener("pointerleave", onStatueLeave);
+    statue.addEventListener("pointerdown", onStatueDown);
+    statue.addEventListener("pointerup", onStatueUp);
+    statue.addEventListener("pointercancel", onStatueUp);
+    statue.addEventListener("contextmenu", onContextMenu);
     hero.addEventListener("pointermove", onPointerMove);
     hero.addEventListener("pointerleave", onPointerLeave);
+    hero.addEventListener("pointerdown", onPointerDown, true);
     document.addEventListener("visibilitychange", onVisibility);
-    reduce.addEventListener("change", onReduceChange);
-    hero.dataset.lens = "ready";
-    start();
+    reduce.addEventListener("change", applyMotion);
 
     return () => {
       stop();
+      clearTimeout(popTimer);
       resize.disconnect();
       visibility.disconnect();
+      statue.removeEventListener("pointerenter", onStatueEnter);
+      statue.removeEventListener("pointerleave", onStatueLeave);
+      statue.removeEventListener("pointerdown", onStatueDown);
+      statue.removeEventListener("pointerup", onStatueUp);
+      statue.removeEventListener("pointercancel", onStatueUp);
+      statue.removeEventListener("contextmenu", onContextMenu);
       hero.removeEventListener("pointermove", onPointerMove);
       hero.removeEventListener("pointerleave", onPointerLeave);
+      hero.removeEventListener("pointerdown", onPointerDown, true);
       document.removeEventListener("visibilitychange", onVisibility);
-      reduce.removeEventListener("change", onReduceChange);
+      reduce.removeEventListener("change", applyMotion);
     };
   }, []);
 
   return (
     <section ref={heroRef} className="hero" aria-labelledby="hero-title">
-      <div className="shell flex flex-col justify-between gap-9 pb-9 pt-9 md:pt-10 lg:min-h-[var(--hero-min)] lg:gap-8">
-        <h1
-          id="hero-title"
-          ref={titleRef}
-          aria-label={profile.name}
-          className="hero-title font-display text-hero font-extrabold tracking-hero"
-        >
-          <span aria-hidden="true" className="hero-stack">
-            <Letters stagger />
-          </span>
-        </h1>
-
-        <div className="hero-meta grid gap-6 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <p className="max-w-measure text-step-1 leading-lede md:text-step-2">{profile.intro}</p>
-            <p className="mt-3 text-muted">{profile.current}</p>
+      <div className="shell hero-body grid items-center gap-8 md:grid-cols-12 md:gap-x-5">
+        <figure className="hero-figure md:col-span-5">
+          <div className="statue-card">
+            <div ref={statueRef} className="statue">
+              <Picture
+                name={profile.portrait}
+                alt="Michelangelo's David blowing a pink bubblegum bubble"
+                sizes="(min-width: 768px) 32vw, 90vw"
+                loading="eager"
+                fetchPriority="high"
+                className="block w-full"
+              />
+              <span ref={gumRef} className="gum" aria-hidden="true" />
+            </div>
           </div>
-          <div className="flex flex-wrap items-center gap-5 lg:col-span-5 lg:justify-end">
-            <a href="#contact" className="btn">
-              Get in touch
-            </a>
-            <a href={profile.resume} target="_blank" rel="noopener noreferrer" className="link-underline">
-              Download CV
-            </a>
+          <figcaption className="hero-hint" aria-hidden="true">
+            <span className="medal" />
+            <span className="hint-hover">Hover over David for two seconds</span>
+            <span className="hint-touch">Press and hold David</span>
+          </figcaption>
+        </figure>
+
+        <div className="hero-copy md:col-span-7 lg:col-span-6 lg:col-start-7">
+          <p className="hero-hello font-display text-step-2 font-medium text-muted">Hello, I&rsquo;m</p>
+          <div className="hero-name">
+            <h1
+              id="hero-title"
+              ref={titleRef}
+              aria-label={profile.name}
+              className="hero-title font-display font-extrabold tracking-hero"
+            >
+              <span aria-hidden="true">
+                <Letters stagger />
+              </span>
+            </h1>
+          </div>
+          <div className="hero-meta">
+            <p className="font-display text-step-1 font-bold uppercase">{profile.role}</p>
+            <p className="mt-5 max-w-measure text-step-1 leading-lede">{profile.bio[0]}</p>
+            <p className="mt-3 text-muted">{profile.current}</p>
+            <ul className="mt-6 flex items-center gap-2">
+              {socials.map(({ label, href, icon }) => {
+                const Icon = socialIcons[icon];
+                return (
+                  <li key={label}>
+                    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="icon-link">
+                      <Icon aria-hidden="true" />
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <a href={profile.resume} target="_blank" rel="noopener noreferrer" className="btn">
+                Download CV
+              </a>
+              <Link href="/contact" className="btn btn-ghost">
+                Get in touch
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Signature effect: a bubblegum lens that magnifies the headline. */}
+      <div className="hero-marquee">
+        <StackMarquee />
+      </div>
+
+      {/* Signature effect: a bubble blown off David's gum that magnifies the name. */}
       <div className="hero-lens-layer" aria-hidden="true">
         <div ref={lensRef} className="hero-lens">
           <div className="hero-bubble">
-            <div ref={copyRef} className="hero-lens-copy hero-stack font-display font-extrabold tracking-hero">
+            <div ref={copyRef} className="hero-lens-copy font-display font-extrabold tracking-hero">
               <Letters />
             </div>
           </div>
+          <span className="hero-splash">
+            {SPLASH.map((deg) => (
+              <i key={deg} style={{ "--a": `${deg}deg` }} />
+            ))}
+          </span>
         </div>
       </div>
     </section>

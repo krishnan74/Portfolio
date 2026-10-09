@@ -1,10 +1,11 @@
 import SectionHeader from "./SectionHeader";
 import { experience } from "@/data/experience";
 
-export default function Experience() {
+// `first` when it opens the /experience page.
+export default function Experience({ first = false }) {
   return (
-    <section id="experience" aria-labelledby="experience-title" className="shell pt-section">
-      <SectionHeader id="experience-title" title="Experience" />
+    <section id="experience" aria-labelledby="experience-title" className={`shell ${first ? "pt-page" : "pt-section"}`}>
+      <SectionHeader id="experience-title" title="Experience" as={first ? "h1" : "h2"} />
 
       <ol className="mt-8 md:mt-9">
         {experience.map((job) => (

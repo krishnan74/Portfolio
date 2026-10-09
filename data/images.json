@@ -63,6 +63,86 @@
       1280
     ]
   },
+  "ens-drive": {
+    "width": 2258,
+    "height": 1490,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "perjury": {
+    "width": 3024,
+    "height": 1902,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "snapads": {
+    "width": 1558,
+    "height": 984,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "swapyoursuiiii": {
+    "width": 1148,
+    "height": 510,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "token-defense": {
+    "width": 2608,
+    "height": 1478,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "squidchain": {
+    "width": 3022,
+    "height": 1495,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "citycash": {
+    "width": 710,
+    "height": 1538,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "whisper-network": {
+    "width": 1919,
+    "height": 1079,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "chennai-connects": {
+    "width": 3022,
+    "height": 1724,
+    "widths": [
+      720,
+      1280
+    ]
+  },
+  "castai": {
+    "width": 3024,
+    "height": 1720,
+    "widths": [
+      720,
+      1280
+    ]
+  },
   "statue": {
     "width": 500,
     "height": 501,

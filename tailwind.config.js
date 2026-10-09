@@ -43,6 +43,7 @@ module.exports = {
       11: "var(--space-11)",
       gutter: "var(--gutter)",
       section: "var(--section-y)",
+      page: "var(--page-top)",
       nav: "var(--nav-h)",
     },
     fontFamily: {
@@ -57,7 +58,6 @@ module.exports = {
       "step-3": ["var(--step-3)", { lineHeight: "var(--leading-tight)" }],
       "step-4": ["var(--step-4)", { lineHeight: "var(--leading-tight)" }],
       "step-5": ["var(--step-5)", { lineHeight: "var(--leading-tight)" }],
-      hero: ["var(--step-hero)", { lineHeight: "var(--leading-hero)" }],
     },
     letterSpacing: {
       normal: "0",

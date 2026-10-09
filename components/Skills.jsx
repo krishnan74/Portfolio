@@ -1,5 +1,4 @@
 import SectionHeader from "./SectionHeader";
-import StackMarquee from "./StackMarquee";
 import { skillGroups } from "@/data/profile";
 
 export default function Skills() {
@@ -8,10 +7,7 @@ export default function Skills() {
       <div className="shell">
         <SectionHeader id="skills-title" title="Skills" />
       </div>
-      <div data-reveal className="mt-8 md:mt-9">
-        <StackMarquee />
-      </div>
-      <dl className="shell mt-8 grid gap-x-5 gap-y-7 sm:grid-cols-2 lg:mt-9 lg:grid-cols-3">
+      <dl className="shell mt-8 grid gap-x-5 gap-y-7 sm:grid-cols-2 md:mt-9 lg:grid-cols-3">
         {skillGroups.map((group, i) => (
           <div key={group.title} data-reveal style={{ "--reveal-delay": `${(i % 3) * 70}ms` }}>
             <dt className="font-display text-step-1 font-bold">{group.title}</dt>
