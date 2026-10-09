@@ -12,7 +12,7 @@ This project is my personal portfolio website. It showcases projects, skills, an
 
 Welcome to my personal portfolio! This website highlights my projects, skills, and professional background. It also integrates with the GitHub API to display my latest repositories.
 
-Visit the website: [Divyakrishnan's Portfolio](https://www.divyakrishnan.tech/)
+Visit the website: [Divyakrishnan's Portfolio](https://www.divyakrishnan.com/)
 
 ## Features
 

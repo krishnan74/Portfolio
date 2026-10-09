@@ -7,13 +7,14 @@ import Avatar from "@/components/Avatar";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
+import Experience from "@/components/Experience";
+import Highlights from "@/components/Highlights";
 import Footer from "@/components/Footer";
 
 import { Montserrat, Poppins, Space_Grotesk } from "next/font/google";
 import { PiArrowUp } from "react-icons/pi";
 import { GoChevronDown } from "react-icons/go";
 import Link from "next/link";
-import { space } from "postcss/lib/list";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"], weight: "700" });
 const montserrat = Montserrat({ subsets: ["latin"], weight: "800" });
@@ -61,14 +62,18 @@ const Page = () => {
             <p
               className={`text-black font-bold text-xl md:text-2xl ${space_grotesk.className}`}
             >
-              WEB / APP DEVELOPER
+              FULL STACK &amp; DEVOPS ENGINEER
+            </p>
+            <p className="text-md md:text-xl text-black mt-1">
+              Cloud · Agentic AI · Web3 &nbsp;|&nbsp; Associate Engineer @ Presidio
             </p>
             <p className="text-md md:text-xl text-black font-normal mt-4 md:mt-6 max-w-lg">
-              Highly adaptable Full Stack Developer and Mobile App Developer
-              with a discerning eye for design and aesthetics. Proficient in
-              various programming languages and frameworks, lead and
-              collaborated with diverse teams. Enthusiastic and creative-minded
-              developer known for rapid learning and innovation.
+              Full stack and DevOps engineer working across cloud
+              infrastructure, agentic AI and Web3. I build and automate
+              workloads on AWS and Azure with Terraform, Kubernetes and CI/CD,
+              develop LLM-powered agents with MCP, RAG and AWS Bedrock, and ship
+              full stack apps and smart contracts. 50+ hackathons, a fast
+              learner with a strong eye for design and UX.
             </p>
             <div className="flex justify-center md:justify-start lg:justify-start gap-4 mt-4 md:mt-6 ">
               <Link href="https://github.com/krishnan74/">
@@ -119,6 +124,15 @@ const Page = () => {
         </button>
       )}
       <p
+        id="experience"
+        className={`flex justify-center items-center text-white text-4xl md:text-5xl mb-10 md:mb-20 underline pt-20 ${space_grotesk.className}`}
+      >
+        Experience
+      </p>
+      <div className="flex justify-center">
+        <Experience />
+      </div>
+      <p
         id="projects"
         className={`flex justify-center items-center text-white text-4xl md:text-5xl mb-10 md:mb-20 underline pt-20 ${space_grotesk.className}`}
       >
@@ -126,6 +140,15 @@ const Page = () => {
       </p>
       <div className="flex justify-center z-0">
         <Projects />
+      </div>
+      <p
+        id="about"
+        className={`flex justify-center items-center text-white text-4xl md:text-5xl mb-10 md:mb-20 underline pt-20 ${space_grotesk.className}`}
+      >
+        Skills &amp; Achievements
+      </p>
+      <div className="flex justify-center">
+        <Highlights />
       </div>
       <div
         className={`fixed top-60 left-[33.5vw] z-20 ${

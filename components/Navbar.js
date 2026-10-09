@@ -20,6 +20,7 @@ const Navbar = () => {
 
       <div className="hidden md:flex justify-start gap-8 items-center px-9 py-2 bg-[#1f1f1f] rounded-full">
         <Link href={"/"}>Home</Link>
+        <Link href={"/#experience"}>Experience</Link>
         <Link href={"/projects"}>Projects</Link>
         {/* <Link href={"/about"}>About</Link> */}
       </div>

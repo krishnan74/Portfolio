@@ -4,9 +4,69 @@ import ProjectCard from "./ProjectCard";
 const Projects = () => {
   const projects = [
     {
+      projectName: "ENS Drive",
+      projectDescription:
+        "Google Drive-style sharing for ENS names: team roles inherited across nested names, checked live on-chain. 2nd prize, ENS track, ETHGlobal Tokyo.",
+      techStack1: "Solidity (Foundry)",
+      techStack2: "ENSv2",
+      techStack3: "Next JS",
+      projectURL: "https://github.com/krishnan74/eth-tokyo-2026",
+    },
+
+    {
+      projectName: "Perjury",
+      projectDescription:
+        "Verification layer for AI agent claims: bonded claims, peer re-derivation and private adjudication via a Chainlink CRE workflow, with ENS reputation. ETHOnline.",
+      techStack1: "Solidity",
+      techStack2: "Chainlink",
+      techStack3: "The Graph",
+      projectURL: "https://github.com/krishnan74/perjury",
+    },
+
+    {
+      projectName: "Token Defense",
+      projectDescription:
+        "Fully on-chain tower defense game on Starknet: defend an AI inference cluster from prompt-injection attacks. Autonomous agents can play via an API.",
+      techStack1: "Cairo",
+      techStack2: "Dojo",
+      techStack3: "React",
+      projectURL: "https://github.com/krishnan74/Token-Defense",
+    },
+
+    {
+      projectName: "SwapYourSuiiii",
+      projectDescription:
+        "Cross-chain swaps between EVM chains and Sui on the 1inch Limit Order Protocol with Move HTLC escrows. 5th place, 1inch track, ETHGlobal Unite DeFi.",
+      techStack1: "Move",
+      techStack2: "1inch LOP",
+      techStack3: "Next JS",
+      projectURL: "https://github.com/krishnan74/evm-sui",
+    },
+
+    {
+      projectName: "SnapAds",
+      projectDescription:
+        "Watch an ad instead of paying gas: a MetaMask Snap shows an ad and an ERC-4337 Paymaster covers the fee. Polygon track winner, ETHGlobal Taipei.",
+      techStack1: "Solidity",
+      techStack2: "MetaMask Snaps",
+      techStack3: "AI Agents",
+      projectURL: "https://github.com/krishnan74/Snap_Ads",
+    },
+
+    {
+      projectName: "Quizup",
+      projectDescription:
+        "Learning management and evaluation system built as a full stack project with an Angular frontend and a .NET backend.",
+      techStack1: "Angular",
+      techStack2: ".NET",
+      techStack3: "SQL Server",
+      projectURL: "https://github.com/krishnan74/.net-full-stack",
+    },
+
+    {
       projectName: "Fleet IQ",
       projectDescription:
-        "A SaaS product for Transport Service Management, streamlining fleet operations, tracking, and maintenance for transportation businesses.",
+        "Co-founded and led tech as CTO: a SaaS product for transport service management covering fleet operations, tracking and maintenance.",
       techStack1: "Next JS",
       techStack2: "MongoDB",
       techStack3: "TailwindCSS",

@@ -9,13 +9,14 @@ const Footer = () => {
 
       <div className="flex justify-center md:justify-start gap-8 items-center text-white mb-4 md:mb-0">
         <Link href={"/"}>Home</Link>
+        <Link href={"/#experience"}>Experience</Link>
         <Link href={"/projects"}>Projects</Link>
         {/* <Link href={"/about"}>About</Link> */}
       </div>
 
       <div>
         <p className="text-white text-center md:text-left">
-          All rights reserved @2024 Divyakrishnan
+          All rights reserved @{new Date().getFullYear()} Divyakrishnan
         </p>
       </div>
     </footer>

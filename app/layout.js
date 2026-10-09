@@ -6,7 +6,8 @@ const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "300" });
 
 export const metadata = {
   title: "Divyakrishnan",
-  description: "Portfolio of Divyakrishnan",
+  description:
+    "Portfolio of Divyakrishnan, Full Stack and DevOps Engineer working across Cloud, Agentic AI and Web3",
 };
 
 export default function RootLayout({ children }) {

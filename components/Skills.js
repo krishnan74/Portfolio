@@ -76,7 +76,7 @@ const Skills = () => {
           alt="figma"
           className="w-[55px] h-[55px] rounded-full"
         />
-        <p className="text-sm">Flutter</p>
+        <p className="text-sm">Figma</p>
       </div>
     </Marquee>
   );
