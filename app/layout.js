@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Bricolage_Grotesque, IBM_Plex_Sans } from "next/font/google";
-import Navbar from "@/components/Navbar";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 // next/font self-hosts both families at build time and preloads them.
 const display = Bricolage_Grotesque({
@@ -40,8 +41,9 @@ export default function RootLayout({ children }) {
         >
           Skip to content
         </a>
-        <Navbar />
+        <Nav />
         {children}
+        <Footer />
       </body>
     </html>
   );

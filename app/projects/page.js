@@ -1,6 +1,5 @@
  import React from "react";
 import ProjectTimelineCard from "@/app/projects/ProjectTimelineCard";
-import Footer from "@/components/Footer";
 
 const projects = [
   {
@@ -96,7 +95,6 @@ const ProjectPage = () => {
           ))}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

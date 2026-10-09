@@ -9,7 +9,6 @@ import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Experience from "@/components/Experience";
 import Highlights from "@/components/Highlights";
-import Footer from "@/components/Footer";
 
 import { Montserrat, Poppins, Space_Grotesk } from "next/font/google";
 import { PiArrowUp } from "react-icons/pi";
@@ -159,7 +158,6 @@ const Page = () => {
       </div>
 
       <div className="h-10"></div>
-      <Footer />
     </div>
   );
 };

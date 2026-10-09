@@ -158,6 +158,124 @@
   }
 }
 
+/* ------------------------------------------------------------------
+   Components (shell)
+------------------------------------------------------------------ */
+@layer components {
+  .shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--max-w);
+    padding-inline: var(--gutter);
+  }
+
+  .nav {
+    background-color: transparent;
+    transition-property: transform, background-color, box-shadow;
+  }
+
+  .nav[data-scrolled="true"] {
+    background-color: color-mix(in srgb, var(--color-bg) 82%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 1px 0 var(--color-line);
+  }
+
+  /* The brand mark is the bubble from the hero, in miniature. */
+  .nav-mark {
+    width: 0.7em;
+    height: 0.7em;
+    border-radius: var(--radius-full);
+    background: radial-gradient(
+      circle at 32% 30%,
+      var(--bubble-highlight) 0 12%,
+      var(--bubble-mid) 45%,
+      var(--bubble-shade) 100%
+    );
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-block;
+    padding-block: var(--space-2);
+    color: var(--color-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-link:hover,
+  .nav-link[aria-current] {
+    color: var(--color-fg);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: var(--space-1);
+    height: var(--space-1);
+    margin-left: calc(var(--space-1) / -2);
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent);
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+
+  .nav-link[aria-current]::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .link-quiet {
+    color: var(--color-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .link-quiet:hover {
+    color: var(--color-fg);
+  }
+
+  /* Mobile menu: a full-screen native <dialog>. */
+  .menu-sheet {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    opacity: 0;
+    transform: translateY(calc(var(--space-4) * -1));
+    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out),
+      overlay var(--dur-base) allow-discrete, display var(--dur-base) allow-discrete;
+  }
+
+  .menu-sheet[open] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @starting-style {
+    .menu-sheet[open] {
+      opacity: 0;
+      transform: translateY(calc(var(--space-4) * -1));
+    }
+  }
+
+  .menu-sheet::backdrop {
+    background: transparent;
+  }
+}
+
+html:has(.menu-sheet[open]) {
+  overflow: hidden;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   html:not(.lenis) {
     scroll-behavior: smooth;
