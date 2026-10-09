@@ -1,29 +1,102 @@
 /** @type {import('tailwindcss').Config} */
+// Every value maps to a CSS custom property defined in app/globals.css,
+// so components only ever use design tokens.
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./components/**/*.{js,jsx,mdx}",
+    "./app/**/*.{js,jsx,mdx}",
+    "./data/**/*.js",
   ],
   theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
-    },
-
     screens: {
-      'cmd' : '1315',
-      'sm': '576px',
-      // => @media (min-width: 576px) { ... }
-
-      'md': '960px',
-      // => @media (min-width: 960px) { ... }
-
-      'lg': '1440px',
+      sm: "576px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1440px",
+      "2xl": "1920px",
+    },
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+      bg: "var(--color-bg)",
+      surface: "var(--color-surface)",
+      "surface-2": "var(--color-surface-2)",
+      line: "var(--color-line)",
+      fg: "var(--color-fg)",
+      muted: "var(--color-muted)",
+      accent: "var(--color-accent)",
+      "on-accent": "var(--color-on-accent)",
+    },
+    spacing: {
+      0: "0",
+      px: "1px",
+      1: "var(--space-1)",
+      2: "var(--space-2)",
+      3: "var(--space-3)",
+      4: "var(--space-4)",
+      5: "var(--space-5)",
+      6: "var(--space-6)",
+      7: "var(--space-7)",
+      8: "var(--space-8)",
+      9: "var(--space-9)",
+      10: "var(--space-10)",
+      11: "var(--space-11)",
+      gutter: "var(--gutter)",
+      section: "var(--section-y)",
+      nav: "var(--nav-h)",
+    },
+    fontFamily: {
+      display: ["var(--font-display)", "system-ui", "sans-serif"],
+      body: ["var(--font-body)", "system-ui", "sans-serif"],
+    },
+    fontSize: {
+      "step--1": ["var(--step--1)", { lineHeight: "var(--leading-body)" }],
+      "step-0": ["var(--step-0)", { lineHeight: "var(--leading-body)" }],
+      "step-1": ["var(--step-1)", { lineHeight: "var(--leading-snug)" }],
+      "step-2": ["var(--step-2)", { lineHeight: "var(--leading-snug)" }],
+      "step-3": ["var(--step-3)", { lineHeight: "var(--leading-tight)" }],
+      "step-4": ["var(--step-4)", { lineHeight: "var(--leading-tight)" }],
+      "step-5": ["var(--step-5)", { lineHeight: "var(--leading-tight)" }],
+      hero: ["var(--step-hero)", { lineHeight: "var(--leading-hero)" }],
+    },
+    letterSpacing: {
+      normal: "0",
+      tight: "var(--tracking-tight)",
+      hero: "var(--tracking-hero)",
+    },
+    lineHeight: {
+      hero: "var(--leading-hero)",
+      tight: "var(--leading-tight)",
+      snug: "var(--leading-snug)",
+      body: "var(--leading-body)",
+    },
+    borderRadius: {
+      none: "0",
+      sm: "var(--radius-sm)",
+      md: "var(--radius-md)",
+      lg: "var(--radius-lg)",
+      full: "var(--radius-full)",
+    },
+    boxShadow: {
+      none: "none",
+      raise: "var(--shadow-raise)",
+      bubble: "var(--shadow-bubble)",
+    },
+    transitionTimingFunction: {
+      out: "var(--ease-out)",
+      "in-out": "var(--ease-in-out)",
+    },
+    transitionDuration: {
+      fast: "var(--dur-fast)",
+      base: "var(--dur-base)",
+      slow: "var(--dur-slow)",
+    },
+    extend: {
+      maxWidth: {
+        page: "var(--max-w)",
+        measure: "var(--measure)",
+      },
     },
   },
   plugins: [],
-}
+};

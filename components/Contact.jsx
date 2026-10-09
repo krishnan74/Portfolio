@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { RxCross1 } from "react-icons/rx";
-import { toast } from "react-toastify";
 const Contact = (props) => {
   const form = useRef();
 
@@ -18,12 +17,12 @@ const Contact = (props) => {
       .then(
         (result) => {
           console.log(result.text);
-          toast.success("Email sent successfully");
+          
           props.callBack(false);
         },
         (error) => {
           console.log(error.text);
-          toast.success("Please try again later");
+          
         }
       );
   };
