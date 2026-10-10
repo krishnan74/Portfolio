@@ -1,6 +1,7 @@
 import Picture from "@/components/Picture";
 import FitText from "./FitText";
 import { linkLabel } from "./linkLabel";
+import AwardMedal from "./AwardMedal";
 
 function ExternalIcon() {
   return (
@@ -10,13 +11,23 @@ function ExternalIcon() {
   );
 }
 
+// With `recognitionUrl` the line links to the event; it sits above the
+// card's full-size link so both stay clickable.
 function Award({ project }) {
-  return project.recognition ? (
+  if (!project.recognition) return null;
+  return (
     <p className="poster-award">
-      <span className="medal" aria-hidden="true" />
-      {project.recognition}
+      <AwardMedal award={project.award} />
+      {project.recognitionUrl ? (
+        <a href={project.recognitionUrl} target="_blank" rel="noopener noreferrer" className="award-link">
+          {project.recognition}
+          <span className="sr-only"> (event page, opens in a new tab)</span>
+        </a>
+      ) : (
+        project.recognition
+      )}
     </p>
-  ) : null;
+  );
 }
 
 // Case-study cards. With an image, the poster shows it whole (diagrams and

@@ -1,19 +1,115 @@
 // Single source of truth for projects, used by the home page and /work.
-// `featured` projects get the large case-study treatment, in this order.
-// `recognition` is the award or event line; `images` are base names of
+// /work groups them: `client: true` projects are in production for real
+// users; a placed `award` (gold, silver, bronze) puts a project under
+// "Hackathon wins", newest first by `date` (ISO, as precise as known); the
+// rest go in the expandable index. Other groups keep this order.
+// `recognition` is the award or event line (`recognitionUrl` links it to
+// the event page) and `award` its medal: "gold" (1st place, a track win or
+// best project), "silver" (2nd), "bronze" (any other placing) or
+// "participation" (built at the event). `images` are base names of
 // optimized files in public/images/opt (see scripts/optimize-images.mjs).
 
 export const projects = [
   {
+    slug: "fleet-iq",
+    name: "Fleet IQ",
+    client: true,
+    description:
+      "Co-founded and led tech as CTO: a SaaS product for transport service management covering fleet operations, tracking and maintenance.",
+    stack: ["Next JS", "MongoDB", "TailwindCSS"],
+    url: "https://fleet-iq.vercel.app/",
+  },
+  {
+    slug: "chennai-connects",
+    name: "Chennai Connects",
+    client: true,
+    description: "A promotional website for an event management firm.",
+    stack: ["ReactJS", "TailwindCSS", "MongoDB"],
+    url: "https://www.chennaiconnects.in/",
+    images: ["chennai-connects"],
+  },
+  {
+    slug: "squidchain",
+    name: "SquidChain",
+    date: "2025-03",
+    description:
+      "A Web3 Squid Game where AI agents are both the players and the moderator: three elimination rounds, with every result stored on an Aurora-based chain.",
+    recognition: "1st place, Aurora AI Agentic Chains bounty, One Trillion Agents Hackathon",
+    award: "gold",
+    stack: ["Solidity", "Aurora", "Covalent AI Agent SDK"],
+    url: "https://devpost.com/software/squidchain",
+    images: ["squidchain"],
+  },
+  {
+    slug: "zepto-with-crypto",
+    name: "Zepto With Crypto",
+    date: "2026-03-15",
+    description:
+      "An OpenClaw agent that orders groceries from Zepto: it pays in USDC over x402 on GOAT Network testnet, then places the order through Playwright browser automation. Also runs as a Telegram bot.",
+    recognition: "1st place, OpenClaw Hack (won a Mac Mini)",
+    award: "gold",
+    recognitionUrl: "https://luma.com/hml6hbs3",
+    stack: ["OpenClaw", "x402", "Playwright"],
+    url: "https://github.com/krishnan74/openclaw-agent",
+  },
+  {
+    slug: "snapads",
+    name: "SnapAds",
+    date: "2025-04",
+    description:
+      "Watch an ad instead of paying gas: a MetaMask Snap shows an ad and an ERC-4337 Paymaster covers the fee.",
+    recognition: "Polygon track winner, ETHGlobal Taipei",
+    award: "gold",
+    stack: ["Solidity", "MetaMask Snaps", "AI Agents"],
+    url: "https://ethglobal.com/showcase/snapads-tsrfi",
+    images: ["snapads"],
+  },
+  {
+    slug: "tangled",
+    name: "Tangled",
+    date: "2023",
+    description:
+      "A decentralized healthcare platform made on XRP Ledger where users can sell and buy their products without any middleman.",
+    recognition: "Best Project and Best Paper, SeedBrains 2023",
+    award: "gold",
+    stack: ["Next JS", "Solidity", "Supabase"],
+    images: ["tangled"],
+  },
+  {
     slug: "ens-drive",
     name: "ENS Drive",
+    date: "2026-09",
     description:
       "Google Drive-style sharing for ENS names: team roles inherited across nested names, checked live on-chain.",
     recognition: "2nd prize, ENS track, ETHGlobal Tokyo",
+    award: "silver",
     stack: ["Solidity (Foundry)", "ENSv2", "Next JS"],
     url: "https://ethglobal.com/showcase/ens-drive-qu2m2",
     images: ["ens-drive"],
-    featured: true,
+  },
+  {
+    slug: "swapyoursuiiii",
+    name: "SwapYourSuiiii",
+    date: "2025-07",
+    description:
+      "Cross-chain swaps between EVM chains and Sui on the 1inch Limit Order Protocol with Move HTLC escrows.",
+    recognition: "5th place, 1inch track, ETHGlobal Unite DeFi",
+    award: "bronze",
+    stack: ["Move", "1inch LOP", "Next JS"],
+    url: "https://ethglobal.com/showcase/swapyoursuiiii-xwsm8",
+    images: ["swapyoursuiiii"],
+  },
+  {
+    slug: "token-defense",
+    name: "Token Defense",
+    date: "2026-03-07",
+    description:
+      "Fully on-chain tower defense game on Starknet: defend an AI inference cluster from prompt-injection attacks. Autonomous agents can play via an API.",
+    recognition: "3rd place, Dojo Game Jam VIII",
+    award: "bronze",
+    stack: ["Cairo", "Dojo", "React"],
+    url: "https://github.com/krishnan74/Token-Defense",
+    images: ["token-defense"],
   },
   {
     slug: "perjury",
@@ -21,53 +117,10 @@ export const projects = [
     description:
       "Verification layer for AI agent claims: bonded claims, peer re-derivation and private adjudication via a Chainlink CRE workflow, with ENS reputation.",
     recognition: "ETHOnline",
+    award: "participation",
     stack: ["Solidity", "Chainlink", "The Graph"],
     url: "https://ethglobal.com/showcase/perjury-fg18a",
     images: ["perjury"],
-    featured: true,
-  },
-  {
-    slug: "snapads",
-    name: "SnapAds",
-    description:
-      "Watch an ad instead of paying gas: a MetaMask Snap shows an ad and an ERC-4337 Paymaster covers the fee.",
-    recognition: "Polygon track winner, ETHGlobal Taipei",
-    stack: ["Solidity", "MetaMask Snaps", "AI Agents"],
-    url: "https://ethglobal.com/showcase/snapads-tsrfi",
-    images: ["snapads"],
-    featured: true,
-  },
-  {
-    slug: "swapyoursuiiii",
-    name: "SwapYourSuiiii",
-    description:
-      "Cross-chain swaps between EVM chains and Sui on the 1inch Limit Order Protocol with Move HTLC escrows.",
-    recognition: "5th place, 1inch track, ETHGlobal Unite DeFi",
-    stack: ["Move", "1inch LOP", "Next JS"],
-    url: "https://ethglobal.com/showcase/swapyoursuiiii-xwsm8",
-    images: ["swapyoursuiiii"],
-    featured: true,
-  },
-  {
-    slug: "squidchain",
-    name: "SquidChain",
-    description:
-      "A Web3 Squid Game where AI agents are both the players and the moderator: three elimination rounds, with every result stored on an Aurora-based chain.",
-    recognition: "1st place, Aurora AI Agentic Chains bounty, One Trillion Agents Hackathon",
-    stack: ["Solidity", "Aurora", "Covalent AI Agent SDK"],
-    url: "https://devpost.com/software/squidchain",
-    images: ["squidchain"],
-    featured: true,
-  },
-  {
-    slug: "token-defense",
-    name: "Token Defense",
-    description:
-      "Fully on-chain tower defense game on Starknet: defend an AI inference cluster from prompt-injection attacks. Autonomous agents can play via an API.",
-    stack: ["Cairo", "Dojo", "React"],
-    url: "https://github.com/krishnan74/Token-Defense",
-    images: ["token-defense"],
-    featured: true,
   },
   {
     slug: "citycash",
@@ -77,16 +130,17 @@ export const projects = [
     stack: ["Particle Universal Accounts", "Magic", "Solidity"],
     url: "https://github.com/krishnan74/zonecash",
     images: ["citycash"],
-    featured: true,
   },
   {
-    slug: "fleet-iq",
-    name: "Fleet IQ",
+    slug: "back-to-the-future",
+    name: "Back To The Future",
     description:
-      "Co-founded and led tech as CTO: a SaaS product for transport service management covering fleet operations, tracking and maintenance.",
-    stack: ["Next JS", "MongoDB", "TailwindCSS"],
-    url: "https://fleet-iq.vercel.app/",
-    featured: true,
+      "A Web3 RPG game based on the famous Hollywood movie (Back To The Future) made on Flow chain.",
+    recognition: "Flow Hackathon Season 2",
+    award: "participation",
+    stack: ["Unity (C#)", "Flow Blockchain", "Flow Unity SDK"],
+    url: "https://devfolio.co/projects/back-to-the-future-58a2",
+    images: ["back-to-the-future", "back-to-the-future2"],
   },
   {
     slug: "whisper-network",
@@ -94,17 +148,10 @@ export const projects = [
     description:
       "Coordinator-free P2P AI inference on Gensyn's AXL mesh: queries are auctioned to the cheapest node, and if a node dies mid-task another reclaims the lease and finishes it.",
     recognition: "ETHGlobal Open Agents",
+    award: "participation",
     stack: ["Python", "Gensyn AXL", "Ollama"],
     url: "https://ethglobal.com/showcase/whisper-network-rsh4a",
     images: ["whisper-network"],
-  },
-  {
-    slug: "zepto-with-crypto",
-    name: "Zepto With Crypto",
-    description:
-      "An OpenClaw agent that orders groceries from Zepto: it pays in USDC over x402 on GOAT Network testnet, then places the order through Playwright browser automation. Also runs as a Telegram bot.",
-    stack: ["OpenClaw", "x402", "Playwright"],
-    url: "https://github.com/krishnan74/openclaw-agent",
   },
   {
     slug: "quizup",
@@ -124,15 +171,6 @@ export const projects = [
     images: ["castai"],
   },
   {
-    slug: "tangled",
-    name: "Tangled",
-    description:
-      "A decentralized healthcare platform made on XRP Ledger where users can sell and buy their products without any middleman.",
-    recognition: "Best Project and Best Paper, SeedBrains 2023",
-    stack: ["Next JS", "Solidity", "Supabase"],
-    images: ["tangled"],
-  },
-  {
     slug: "xrp-commerce",
     name: "XRP-Commerce",
     description:
@@ -140,15 +178,6 @@ export const projects = [
     stack: ["Next JS", "XRPL", "Supabase"],
     url: "https://xrp-ecommerce.vercel.app/",
     images: ["xrp-commerce"],
-  },
-  {
-    slug: "back-to-the-future",
-    name: "Back To The Future",
-    description:
-      "A Web3 RPG game based on the famous Hollywood movie (Back To The Future) made on Flow chain.",
-    stack: ["Unity (C#)", "Flow Blockchain", "Flow Unity SDK"],
-    url: "https://devfolio.co/projects/back-to-the-future-58a2",
-    images: ["back-to-the-future", "back-to-the-future2"],
   },
   {
     slug: "nft-mon",
@@ -209,14 +238,6 @@ export const projects = [
     url: "https://github.com/krishnan74/discord-bot",
   },
   {
-    slug: "chennai-connects",
-    name: "Chennai Connects",
-    description: "A promotional website for an event management firm (client project).",
-    stack: ["ReactJS", "TailwindCSS", "MongoDB"],
-    url: "https://www.chennaiconnects.in/",
-    images: ["chennai-connects"],
-  },
-  {
     slug: "weather-ui",
     name: "Weather UI Clone",
     description: "Recreation of a weather UI design as a React webpage.",
@@ -226,5 +247,10 @@ export const projects = [
   },
 ];
 
-export const featuredProjects = projects.filter((p) => p.featured);
-export const otherProjects = projects.filter((p) => !p.featured);
+const placed = ["gold", "silver", "bronze"];
+
+export const clientProjects = projects.filter((p) => p.client);
+export const wonProjects = projects
+  .filter((p) => !p.client && placed.includes(p.award))
+  .sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+export const otherProjects = projects.filter((p) => !p.client && !placed.includes(p.award));

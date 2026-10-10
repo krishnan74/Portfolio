@@ -1047,6 +1047,29 @@
     margin-top: 0.3em;
   }
 
+  .award-link {
+    position: relative;
+    z-index: 1;
+    text-decoration: underline;
+    /* --color-line vanishes on the card surface; a tint of the text shows. */
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    transition: color var(--dur-fast) var(--ease-out), text-decoration-color var(--dur-fast) var(--ease-out);
+  }
+
+  .award-link:hover {
+    color: var(--color-accent);
+    text-decoration-color: currentColor;
+  }
+
+  /* Emoji medal before a project's recognition line. */
+  .award-medal {
+    flex-shrink: 0;
+    font-size: 1.25em;
+    line-height: 1;
+  }
+
   /* Whole card is the link target; the visible name keeps the accessible name. */
   .card-link::after {
     content: "";

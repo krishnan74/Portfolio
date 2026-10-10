@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import Picture from "@/components/Picture";
 import { linkLabel } from "./linkLabel";
+import AwardMedal from "./AwardMedal";
 
 function PlusIcon({ open }) {
   return (
@@ -137,8 +138,15 @@ export default function ProjectIndex({ projects, headingLevel = 4 }) {
                   <div className="flex flex-col gap-4 md:col-span-5">
                     {project.recognition && (
                       <p className="flex items-center gap-2 text-step--1 font-medium">
-                        <span className="medal" aria-hidden="true" />
-                        {project.recognition}
+                        <AwardMedal award={project.award} />
+                        {project.recognitionUrl ? (
+                          <a href={project.recognitionUrl} target="_blank" rel="noopener noreferrer" className="award-link">
+                            {project.recognition}
+                            <span className="sr-only"> (event page, opens in a new tab)</span>
+                          </a>
+                        ) : (
+                          project.recognition
+                        )}
                       </p>
                     )}
                     <p className="max-w-measure">{project.description}</p>

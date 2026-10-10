@@ -1,15 +1,15 @@
 import Link from "next/link";
 import SectionHeader from "@/components/SectionHeader";
 import FeaturedProjects from "./FeaturedProjects";
-import { featuredProjects, projects } from "@/data/projects";
+import { projects, wonProjects } from "@/data/projects";
 
-// Home page teaser: the first three featured projects, then a way into /work.
+// Home page teaser: the first three hackathon wins, then a way into /work.
 export default function Work() {
   return (
     <section id="work" aria-labelledby="work-title" className="shell pt-section">
       <SectionHeader id="work-title" title="Selected work" aside={`${projects.length} projects`} />
       <div className="mt-8 md:mt-9">
-        <FeaturedProjects projects={featuredProjects.slice(0, 3)} lead />
+        <FeaturedProjects projects={wonProjects.slice(0, 3)} lead />
       </div>
       <p data-reveal className="mt-8 md:mt-9">
         <Link href="/work" className="btn">
