@@ -1,5 +1,31 @@
 import SectionHeader from "./SectionHeader";
 import { experience } from "@/data/experience";
+import images from "@/data/images.json";
+
+// Logos differ in shape (wordmarks vs a round badge); sizing by aspect gives
+// them about the same visual weight. Wider marks get shorter.
+const LOGO_SIZE = 3.06; // rem; a 7.3:1 wordmark ends up 1.25rem tall
+
+function CompanyLogo({ name, scale = 1 }) {
+  const meta = images[name];
+  if (!meta) return null;
+  const height = `${((LOGO_SIZE * scale) / Math.pow(meta.width / meta.height, 0.45)).toFixed(3)}rem`;
+  // Light and dark versions; the theme tokens show one (see .company-logo).
+  return ["", "-dark"].map((suffix) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      key={suffix}
+      src={`/images/opt/${name}${suffix}.png`}
+      width={meta.width}
+      height={meta.height}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      className={`company-logo${suffix ? " company-logo-dark" : " company-logo-light"}`}
+      style={{ height, width: "auto" }}
+    />
+  ));
+}
 
 // `first` when it opens the /experience page.
 export default function Experience({ first = false }) {
@@ -16,8 +42,30 @@ export default function Experience({ first = false }) {
           >
             <div className="lg:col-span-4">
               <div className="lg:sticky lg:top-[calc(var(--nav-h)+var(--space-6))]">
+                {job.logo && (
+                  // Same link as the name below; kept out of the tab order.
+                  <a
+                    href={job.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="mb-4 flex min-h-7 w-fit items-center"
+                  >
+                    <CompanyLogo name={job.logo} scale={job.logoScale} />
+                  </a>
+                )}
                 <h3 className="font-display text-step-3 font-bold">{job.role}</h3>
-                <p className="mt-2 text-step-1">{job.company}</p>
+                <p className="mt-2 text-step-1">
+                  {job.url ? (
+                    <a href={job.url} target="_blank" rel="noopener noreferrer" className="company-link">
+                      {job.company}
+                      <span className="sr-only"> on LinkedIn (opens in a new tab)</span>
+                    </a>
+                  ) : (
+                    job.company
+                  )}
+                </p>
                 <p className="mt-3 text-step--1 text-muted">
                   <span className="block">{job.period}</span>
                   <span className="block">{job.location}</span>

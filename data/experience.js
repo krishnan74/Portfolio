@@ -1,6 +1,11 @@
+// `logo` is the base name of a company logo in public/images/opt (light and
+// "-dark" versions; see `logos` in scripts/optimize-images.mjs); `logoScale`
+// enlarges one that reads small. `url` is the company's LinkedIn page.
 export const experience = [
   {
     company: "Presidio",
+    logo: "logo-presidio",
+    url: "https://www.linkedin.com/company/presidio-/home/",
     role: "Associate Engineer",
     period: "Oct 2025 – Present",
     location: "Chennai, Tamil Nadu",
@@ -30,6 +35,8 @@ export const experience = [
   },
   {
     company: "Presidio",
+    logo: "logo-presidio",
+    url: "https://www.linkedin.com/company/presidio-/home/",
     role: "Intern",
     period: "Apr 2025 – Oct 2025",
     location: "Chennai, Tamil Nadu",
@@ -39,6 +46,9 @@ export const experience = [
   },
   {
     company: "Crafted With Love",
+    logo: "logo-crafted-with-love",
+    logoScale: 1.35, // thin linework; at the shared size it blurs
+    url: "https://www.linkedin.com/company/craftedwithlove/home/",
     role: "Software Developer Intern",
     period: "Aug 2024 – Oct 2024",
     location: "Remote",
@@ -48,6 +58,8 @@ export const experience = [
   },
   {
     company: "OpenWeaver",
+    logo: "logo-openweaver",
+    url: "https://www.linkedin.com/company/openweaver/home/",
     role: "Studio Developer Intern",
     period: "Feb 2024 – Mar 2024",
     location: "Chennai",

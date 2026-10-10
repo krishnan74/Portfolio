@@ -32,6 +32,9 @@
   --glass-edge: rgb(255 255 255 / 0.09);
   --glass-sheen: rgb(255 255 255 / 0.06);
   --glass-shadow: 0 0.75rem 2rem -1rem rgb(0 0 0 / 0.6);
+  /* which company logo version shows */
+  --logo-light: none;
+  --logo-dark: block;
   color-scheme: dark;
 
   /* spacing: 4px base */
@@ -116,6 +119,8 @@
     --glass-edge: rgb(22 22 26 / 0.1);
     --glass-sheen: rgb(255 255 255 / 0.7);
     --glass-shadow: 0 0.75rem 2rem -1rem rgb(40 30 40 / 0.3);
+    --logo-light: block;
+    --logo-dark: none;
     color-scheme: light;
   }
 }
@@ -137,6 +142,8 @@
   --glass-edge: rgb(22 22 26 / 0.1);
   --glass-sheen: rgb(255 255 255 / 0.7);
   --glass-shadow: 0 0.75rem 2rem -1rem rgb(40 30 40 / 0.3);
+  --logo-light: block;
+  --logo-dark: none;
   color-scheme: light;
 }
 
@@ -1114,6 +1121,34 @@
   .index-preview-item[data-active="true"] {
     opacity: 1;
     transform: scale(1);
+  }
+
+  /* Company logos on /experience: brand colors, with a version lifted for
+     the dark theme. The theme tokens decide which one shows. */
+  .company-logo {
+    flex: none;
+    max-width: none;
+  }
+
+  .company-link {
+    text-decoration: underline;
+    text-decoration-color: var(--color-line);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    transition: color var(--dur-fast) var(--ease-out), text-decoration-color var(--dur-fast) var(--ease-out);
+  }
+
+  .company-link:hover {
+    color: var(--color-accent);
+    text-decoration-color: currentColor;
+  }
+
+  .company-logo-light {
+    display: var(--logo-light);
+  }
+
+  .company-logo-dark {
+    display: var(--logo-dark);
   }
 
   /* Stack marquee */

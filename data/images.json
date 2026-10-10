@@ -262,5 +262,17 @@
       320,
       500
     ]
+  },
+  "logo-presidio": {
+    "width": 878,
+    "height": 120
+  },
+  "logo-crafted-with-love": {
+    "width": 130,
+    "height": 120
+  },
+  "logo-openweaver": {
+    "width": 678,
+    "height": 120
   }
 }
