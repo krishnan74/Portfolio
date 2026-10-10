@@ -326,14 +326,17 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className="hero" aria-labelledby="hero-title">
-      <div className="shell hero-body grid items-center gap-8 md:grid-cols-12 md:gap-x-5">
-        <figure className="hero-figure md:col-span-5">
+      {/* From lg the frame and copy are centered as a pair, and the copy column is
+          exactly as tall as the frame: intro at the top, socials and buttons on
+          the frame's bottom edge. */}
+      <div className="shell hero-body grid items-center gap-8 md:grid-cols-12 md:gap-x-5 lg:grid-cols-hero lg:content-center lg:items-start lg:justify-center lg:gap-x-hero-gap">
+        <figure className="hero-figure md:col-span-5 lg:col-span-1">
           <div className="statue-card">
             <div ref={statueRef} className="statue">
               <Picture
                 name={profile.portrait}
                 alt="Michelangelo's David blowing a pink bubblegum bubble"
-                sizes="(min-width: 768px) 32vw, 90vw"
+                sizes="(min-width: 1024px) 26rem, (min-width: 768px) 32vw, 18rem"
                 loading="eager"
                 fetchPriority="high"
                 className="block w-full"
@@ -348,7 +351,7 @@ export default function Hero() {
           </figcaption>
         </figure>
 
-        <div className="hero-copy md:col-span-7 lg:col-span-6 lg:col-start-7">
+        <div className="hero-copy md:col-span-7 lg:col-span-1 lg:flex lg:flex-col lg:self-stretch">
           <p className="hero-hello font-display text-step-2 font-medium text-muted">Hello, I&rsquo;m</p>
           <div className="hero-name">
             <h1
@@ -362,29 +365,31 @@ export default function Hero() {
               </span>
             </h1>
           </div>
-          <div className="hero-meta">
+          <div className="hero-meta lg:flex lg:flex-1 lg:flex-col">
             <p className="font-display text-step-1 font-bold uppercase">{profile.role}</p>
-            <p className="mt-5 max-w-measure text-step-1 leading-lede">{profile.bio[0]}</p>
-            <p className="mt-3 text-muted">{profile.current}</p>
-            <ul className="mt-6 flex items-center gap-2">
-              {socials.map(({ label, href, icon }) => {
-                const Icon = socialIcons[icon];
-                return (
-                  <li key={label}>
-                    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="icon-link">
-                      <Icon aria-hidden="true" />
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <a href={profile.resume} target="_blank" rel="noopener noreferrer" className="btn">
-                Download CV
-              </a>
-              <Link href="/contact" className="btn btn-ghost">
-                Get in touch
-              </Link>
+            <p className="hero-bio mt-6 max-w-measure text-step-1 leading-lede lg:mt-4">{profile.bio[0]}</p>
+            <p className="mt-3 text-muted lg:mt-2">{profile.current}</p>
+            <div className="mt-6 md:mt-7 lg:mt-auto lg:flex lg:flex-wrap lg:items-center lg:gap-x-6 lg:gap-y-4 lg:pt-5">
+              <ul className="flex items-center gap-2">
+                {socials.map(({ label, href, icon }) => {
+                  const Icon = socialIcons[icon];
+                  return (
+                    <li key={label}>
+                      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="icon-link">
+                        <Icon aria-hidden="true" />
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-7 lg:mt-0">
+                <a href={profile.resume} target="_blank" rel="noopener noreferrer" className="btn">
+                  Download CV
+                </a>
+                <Link href="/contact" className="btn btn-ghost">
+                  Get in touch
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -21,10 +21,11 @@
   --bubble-highlight: #ffe0ef;
   --bubble-mid: #ff8fc4;
   --bubble-shade: #d94f93;
-  /* hero statue card: a lilac plinth that stays light in both themes */
-  --statue-bg: linear-gradient(140deg, #f1dcea 0%, #e6e0f3 100%);
-  --statue-edge: transparent;
-  --statue-shadow: var(--color-accent);
+  /* hero statue frame: the page shows through it, with a pale pink
+     outline and hard shadow (the old site's lilac); ink in light mode */
+  --statue-bg: var(--color-bg);
+  --statue-edge: #e6dbe9;
+  --statue-shadow: #e6dbe9;
   /* header glass */
   --glass-bg: rgb(24 24 29 / 0.45);
   --glass-bg-scrolled: rgb(24 24 29 / 0.82);
@@ -366,34 +367,77 @@
   .hero {
     --bubble-size: clamp(7.5rem, 3.5rem + 10vw, 15rem);
     --bubble-ink: #16161a;
+    /* Where the hero fills the screen (md up) everything is lifted a touch:
+       the marquee via the foot, the centered content via the extra bottom
+       padding on .hero-body. */
+    --hero-lift: 0px;
+    --hero-raise: 0px;
+    /* The marquee's logos end as far above the fold as the header sits below
+       the top (less the marquee's own bottom padding), plus the lift. */
+    --hero-foot: calc(max(0px, var(--nav-top) - var(--space-5)) + var(--hero-lift));
+    /* Statue frame width from lg, and the gap between it and the copy. */
+    --statue-w: min(clamp(22.5rem, 13.88rem + 13.46vw, 26rem), 54svh);
+    --hero-gap: clamp(4rem, 1.54rem + 3.85vw, 5rem);
     position: relative;
     display: flex;
     flex-direction: column;
-    min-height: max(100svh, 40rem);
+    min-height: max(100svh - var(--hero-foot), 40rem);
     padding-top: var(--nav-h);
     overflow: clip;
   }
 
   @media (min-width: 1440px) {
     .hero {
-      min-height: min(100svh, 64rem);
+      min-height: calc(min(100svh, 68rem) - var(--hero-foot));
     }
   }
 
   .hero-body {
     flex: 1;
-    padding-block: var(--space-7) var(--space-8);
+    /* The content is centered, so extra bottom padding raises it by half:
+       the lift, plus --hero-raise for the content alone. */
+    padding-block: var(--space-6) calc(var(--space-7) + var(--hero-lift) + 2 * var(--hero-raise));
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      --hero-lift: 0.625rem;
+      --hero-raise: 0.625rem;
+    }
+  }
+
+  /* The centered pair reads left-heavy (the frame is the darker mass), so it
+     sits a touch right of true center. */
+  @media (min-width: 1024px) {
+    .hero-body {
+      --hero-nudge: clamp(0.75rem, 1.6vw, 1.75rem);
+      padding-inline-start: calc(var(--gutter) + 2 * var(--hero-nudge));
+    }
   }
 
   /* Statue card: a framed plinth with a hard offset shadow. */
   .hero-figure {
     width: 100%;
-    max-width: min(26rem, 100%);
+    max-width: min(18rem, 100%);
   }
 
   @media (min-width: 768px) {
     .hero-figure {
-      max-width: min(32rem, 100%, 62svh);
+      max-width: min(28rem, 100%, 52svh);
+    }
+  }
+
+  /* From lg the figure is only the frame (the hint hangs below it), so the
+     copy column beside it can match the frame's height. */
+  @media (min-width: 1024px) {
+    .hero-figure {
+      position: relative;
+    }
+
+    .hero-hint {
+      position: absolute;
+      top: 100%;
+      left: 0;
     }
   }
 
@@ -403,7 +447,6 @@
     padding: var(--space-6) 0 0 var(--space-5);
     overflow: hidden;
     border: 2px solid var(--statue-edge);
-    border-radius: var(--radius-md);
     background: var(--statue-bg);
     box-shadow: 0.625rem 0.625rem 0 var(--statue-shadow);
   }
@@ -484,7 +527,7 @@
   /* The name always sits on one line, sized to fill its column. */
   .hero-name {
     container-type: inline-size;
-    margin-top: var(--space-2);
+    margin-top: var(--space-3);
   }
 
   .hero-title,
@@ -497,6 +540,14 @@
     width: fit-content;
     /* Advance width of "Divyakrishnan" is ~6.3em at these sizes. */
     font-size: min(100cqi / 6.4, 9rem);
+  }
+
+  /* At these sizes the name sets ~5.8-6em wide, so it meets the column's right
+     edge; capped so the copy still fits the frame's height. */
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: min(100cqi / 6, 6.5rem);
+    }
   }
 
   .hero-line {
@@ -516,7 +567,29 @@
   }
 
   .hero-meta {
-    margin-top: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  @media (min-width: 1024px) {
+    .hero-name {
+      margin-top: var(--space-2);
+    }
+
+    .hero-meta {
+      margin-top: var(--space-5);
+    }
+  }
+
+  /* Where the frame is smallest (narrower or shorter desktops) the bio steps
+     down a size so the copy still fits beside it. */
+  @media (min-width: 1024px) and (max-width: 1439px), (min-width: 1024px) and (max-height: 820px) {
+    .hero-meta {
+      margin-top: var(--space-4);
+    }
+
+    .hero-meta .hero-bio {
+      font-size: var(--step-0);
+    }
   }
 
   .hero-marquee .stack-marquee {

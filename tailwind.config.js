@@ -46,6 +46,7 @@ module.exports = {
       page: "var(--page-top)",
       nav: "var(--nav-h)",
       "nav-top": "var(--nav-top)",
+      "hero-gap": "var(--hero-gap)",
     },
     fontFamily: {
       display: ["var(--font-display)", "system-ui", "sans-serif"],
@@ -98,6 +99,11 @@ module.exports = {
       maxWidth: {
         page: "var(--max-w)",
         measure: "var(--measure)",
+      },
+      gridTemplateColumns: {
+        // Hero from lg: the statue frame at its own width, then the copy at
+        // about the name's width; the pair is centered (see .hero-body).
+        hero: "var(--statue-w) minmax(0, 38rem)",
       },
     },
   },
