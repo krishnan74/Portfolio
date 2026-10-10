@@ -119,7 +119,7 @@ export default function ProjectIndex({ projects, headingLevel = 4 }) {
                     setHovered(project.images?.length ? project.slug : null);
                   }}
                   onPointerLeave={() => setHovered(null)}
-                  className="index-trigger grid w-full grid-cols-12 items-baseline gap-x-5 py-5 text-left"
+                  className="index-trigger grid w-full grid-cols-12 items-baseline gap-x-5 py-5 text-left md:py-6"
                 >
                   <span className="col-span-10 font-display text-step-2 font-bold tracking-tight md:col-span-5">
                     {project.name}

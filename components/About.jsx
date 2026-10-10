@@ -31,7 +31,7 @@ export default function About({ first = false }) {
             <h3 className="font-display text-step-1 font-bold">Outside work</h3>
             <ul className="mt-4 border-t border-line">
               {profile.outsideWork.map((item) => (
-                <li key={item} className="border-b border-line py-3 text-muted">
+                <li key={item} className="border-b border-line py-4 text-muted">
                   {item}
                 </li>
               ))}

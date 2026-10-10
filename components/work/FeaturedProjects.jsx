@@ -26,7 +26,7 @@ function Award({ project }) {
 export default function FeaturedProjects({ projects, headingLevel = 3, lead = false }) {
   const Heading = `h${headingLevel}`;
   return (
-    <ul className="grid gap-x-6 gap-y-8 md:grid-cols-2 md:gap-y-9">
+    <ul className="grid gap-x-7 gap-y-9 md:grid-cols-2 md:gap-y-10">
       {projects.map((project, i) => {
         const isLead = lead && i === 0;
         const image = project.images?.[0];
@@ -67,7 +67,7 @@ export default function FeaturedProjects({ projects, headingLevel = 3, lead = fa
               )}
 
               {image && (
-                <div className="mt-5 flex flex-col gap-2">
+                <div className="mt-6 flex flex-col gap-3">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
                     <Award project={project} />
                     <p className="text-step--1 text-muted">{project.stack.join(", ")}</p>
@@ -76,7 +76,7 @@ export default function FeaturedProjects({ projects, headingLevel = 3, lead = fa
                 </div>
               )}
 
-              <div className={`card-meta ${image ? "mt-3" : "mt-5"}`}>
+              <div className={`card-meta ${image ? "mt-4" : "mt-6"}`}>
                 <p className="max-w-measure">{project.description}</p>
                 <p className="flex items-center gap-1 self-start whitespace-nowrap text-step--1 font-medium">
                   {linkLabel(project.url)}

@@ -12,7 +12,7 @@ export default function Experience({ first = false }) {
           <li
             key={`${job.company}-${job.role}`}
             data-reveal
-            className="grid gap-5 border-t border-line py-7 first:border-t-0 first:pt-0 lg:grid-cols-12 lg:gap-x-5"
+            className="grid gap-6 border-t border-line py-8 first:border-t-0 first:pt-0 lg:grid-cols-12 lg:gap-x-5 lg:py-9"
           >
             <div className="lg:col-span-4">
               <div className="lg:sticky lg:top-[calc(var(--nav-h)+var(--space-6))]">
@@ -25,14 +25,14 @@ export default function Experience({ first = false }) {
               </div>
             </div>
 
-            <div className="flex flex-col gap-6 lg:col-span-7 lg:col-start-6">
+            <div className="flex flex-col gap-7 lg:col-span-7 lg:col-start-6">
               {job.summary && <p className="max-w-measure">{job.summary}</p>}
               {job.highlights && (
-                <ul className="flex flex-col gap-6">
+                <ul className="flex flex-col gap-7">
                   {job.highlights.map((item) => (
                     <li key={item.title} className="max-w-measure">
                       <h4 className="font-display text-step-1 font-bold">{item.title}</h4>
-                      <p className="mt-1 text-step--1 text-muted">{item.period}</p>
+                      <p className="mt-2 text-step--1 text-muted">{item.period}</p>
                       <p className="mt-3">{item.text}</p>
                     </li>
                   ))}

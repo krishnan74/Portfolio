@@ -60,7 +60,7 @@ export default function Contact({ first = false }) {
             Send a message here or email me directly.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
-            <a href={`mailto:${profile.email}`} className="contact-email font-display text-step-2 font-bold">
+            <a href={`mailto:${profile.email}`} className="contact-email font-display text-step-1 font-bold sm:text-step-2">
               {profile.email}
             </a>
             <button type="button" onClick={copyEmail} className="link-quiet min-h-7 text-step--1 font-medium">
