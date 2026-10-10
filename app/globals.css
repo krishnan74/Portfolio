@@ -1032,6 +1032,10 @@
   .fit-text {
     display: inline-block;
     white-space: nowrap;
+    /* FitText measures right after setting font-size. The reduced-motion
+       reset gives every element a tiny transition duration, which would
+       otherwise animate that change and feed it stale widths. */
+    transition-property: none;
   }
 
   .project-card .ext-icon {
