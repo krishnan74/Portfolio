@@ -31,7 +31,7 @@ export const profile = {
 export const socials = [
   { label: "GitHub", href: "https://github.com/krishnan74/", icon: "FaGithub" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/divyakrishnan-r/", icon: "FaLinkedin" },
-  { label: "X (Twitter)", href: "https://twitter.com/Krishna29371748", icon: "FaXTwitter" },
+  { label: "X (Twitter)", href: "https://x.com/divyakrishnan_r", icon: "FaXTwitter" },
 ];
 
 // Logos for the stack marquee in the hero; `icon` is a react-icons/si export name.

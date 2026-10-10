@@ -45,7 +45,7 @@ export const metadata = {
     card: "summary_large_image",
     title,
     description,
-    creator: "@Krishna29371748",
+    creator: "@divyakrishnan_r",
     images: ["/og.png"],
   },
   // Next 13.5 still reads these from metadata.
