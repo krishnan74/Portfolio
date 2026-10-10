@@ -1,6 +1,7 @@
 // `logo` is the base name of a company logo in public/images/opt (light and
 // "-dark" versions; see `logos` in scripts/optimize-images.mjs); `logoScale`
 // enlarges one that reads small. `url` is the company's LinkedIn page.
+// `summaryLink` links the first occurrence of its text in the summary.
 export const experience = [
   {
     company: "Presidio",
@@ -53,7 +54,8 @@ export const experience = [
     period: "Aug 2024 – Oct 2024",
     location: "Remote",
     summary:
-      "Revamped the AlienWardrobe eCommerce fashion platform with Next.js for better performance and UX. Managed the database and CI/CD on AWS Amplify, and built API routes and Prisma schemas.",
+      "Contributed to the development and enhancement of AlienWardrobe, the company's eCommerce fashion platform. Revamped the site with Next.js, improving its performance and user experience. Built API routes and configured the database schemas with Prisma to make data management more efficient, and handled database management and deployments, including CI/CD, on AWS Amplify.",
+    summaryLink: { text: "AlienWardrobe", href: "https://www.alienwardrobe.com/" },
     stack: ["Next.js", "Prisma", "AWS Amplify"],
   },
   {
@@ -64,7 +66,7 @@ export const experience = [
     period: "Feb 2024 – Mar 2024",
     location: "Chennai",
     summary:
-      "Built customized client websites on the low-code OpenWeaver Studio, gathering requirements directly from clients.",
+      "Designed and built customized websites for 10+ clients on OpenWeaver Studio, a low-code platform. Worked directly with each client to gather requirements and shaped every site around their specific needs, then delivered client-focused websites that met their goals and saw each project through to a successful finish.",
     stack: ["OpenWeaver Studio"],
   },
 ];

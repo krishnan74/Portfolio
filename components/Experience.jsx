@@ -27,6 +27,22 @@ function CompanyLogo({ name, scale = 1 }) {
   ));
 }
 
+// The summary, with `summaryLink.text` (if any) linked.
+function Summary({ text, link }) {
+  const at = link ? text.indexOf(link.text) : -1;
+  if (at < 0) return <p className="max-w-measure">{text}</p>;
+  return (
+    <p className="max-w-measure">
+      {text.slice(0, at)}
+      <a href={link.href} target="_blank" rel="noopener noreferrer" className="company-link">
+        {link.text}
+        <span className="sr-only"> (opens in a new tab)</span>
+      </a>
+      {text.slice(at + link.text.length)}
+    </p>
+  );
+}
+
 // `first` when it opens the /experience page.
 export default function Experience({ first = false }) {
   return (
@@ -74,7 +90,7 @@ export default function Experience({ first = false }) {
             </div>
 
             <div className="flex flex-col gap-7 lg:col-span-7 lg:col-start-6">
-              {job.summary && <p className="max-w-measure">{job.summary}</p>}
+              {job.summary && <Summary text={job.summary} link={job.summaryLink} />}
               {job.highlights && (
                 <ul className="flex flex-col gap-7">
                   {job.highlights.map((item) => (
