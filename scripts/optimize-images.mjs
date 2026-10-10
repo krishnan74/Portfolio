@@ -243,6 +243,67 @@ for (const [name, { file, ink, darkLum }] of Object.entries(logos)) {
   console.log(name, `${info.width}x${info.height}`);
 }
 
+// Tech marks for components/TechList.jsx, cut from logo lockups and made
+// one-colour (drawn as a CSS mask in the list's text color, like the
+// react-icons beside them). `alpha` maps each pixel to opacity; `region`
+// keeps only the mark (as a fraction of the image width). Square, 96px.
+const dist = (r, g, b, [R, G, B]) => Math.hypot(r - R, g - G, b - B);
+const ramp = (d, solid, clear) => Math.min(1, Math.max(0, (clear - d) / (clear - solid)));
+const techMarks = {
+  // Light blue disc with the train knocked out.
+  "mark-litellm": {
+    file: "assets/images/company logos/litellm.png",
+    region: 0.3,
+    alpha: (r, g, b) => ramp(dist(r, g, b, [137, 207, 235]), 30, 90),
+  },
+  // Red square with the lettering knocked out.
+  "mark-modelizeit": {
+    file: "assets/images/company logos/modelizeit_inc_logo.jpeg",
+    region: 1,
+    alpha: (r, g, b) => ramp(dist(r, g, b, [237, 28, 36]), 40, 120),
+  },
+  // The round OpenWeaver mark, its two pinks kept as two tones.
+  "mark-openweaver-studio": {
+    file: "assets/images/company logos/open-weaver-studio.webp",
+    region: 0.15,
+    alpha: (r, g, b) => ramp(255 - (r * 0.3 + g * 0.59 + b * 0.11), 150, 8),
+  },
+};
+const MARK = 96;
+
+for (const [name, { file, region, alpha }] of Object.entries(techMarks)) {
+  const { data, info } = await sharp(path.join(root, file))
+    .flatten({ background: "#ffffff" })
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  const W = info.width, H = info.height, C = info.channels, maxX = Math.round(W * region);
+  const rgba = Buffer.alloc(W * H * 4);
+  let x0 = W, y0 = H, x1 = 0, y1 = 0;
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < maxX; x++) {
+      const i = (y * W + x) * C;
+      const a = Math.round(alpha(data[i], data[i + 1], data[i + 2]) * 255);
+      rgba[(y * W + x) * 4 + 3] = a;
+      if (a > 8) (x0 = Math.min(x0, x)), (x1 = Math.max(x1, x)), (y0 = Math.min(y0, y)), (y1 = Math.max(y1, y));
+    }
+  }
+  const w = x1 - x0 + 1, h = y1 - y0 + 1, side = Math.max(w, h);
+  await sharp(rgba, { raw: { width: W, height: H, channels: 4 } })
+    .extract({ left: x0, top: y0, width: w, height: h })
+    .extend({
+      top: Math.floor((side - h) / 2),
+      bottom: Math.ceil((side - h) / 2),
+      left: Math.floor((side - w) / 2),
+      right: Math.ceil((side - w) / 2),
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
+    .resize(MARK, MARK)
+    .png({ compressionLevel: 9 })
+    .toFile(path.join(outDir, `${name}.png`));
+  manifest[name] = { width: MARK, height: MARK };
+  console.log(name, `${w}x${h} -> ${MARK}px`);
+}
+
 await fs.writeFile(
   path.join(root, "data/images.json"),
   JSON.stringify(manifest, null, 2) + "\n"

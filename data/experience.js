@@ -2,6 +2,8 @@
 // "-dark" versions; see `logos` in scripts/optimize-images.mjs); `logoScale`
 // enlarges one that reads small. `url` is the company's LinkedIn page.
 // `summaryLink` links the first occurrence of its text in the summary.
+// `stack` (on a job or a highlight) lists technologies, shown with their
+// logos where components/TechList.jsx has one.
 export const experience = [
   {
     company: "Presidio",
@@ -15,24 +17,27 @@ export const experience = [
         title: "FinOps AI agent for cloud architecture review",
         period: "Jun 2026 – Present",
         text: "AI agent for an enterprise client that reviews proposed cloud architectures before provisioning, estimating AWS costs and checking designs against governance standards. Built and deployed an OpenWebUI + LiteLLM gateway on EKS with Bedrock, MCP servers for AWS pricing and internal knowledge, and Terraform/Helm deployments aligned to the client's CI.",
+        stack: ["AWS", "Bedrock", "EKS", "Open WebUI", "LiteLLM", "MCP", "Terraform", "Helm"],
       },
       {
         title: "Azure assessment and pilot migration",
         period: "Apr 2026 – Present",
         text: "Mapped applications and affinity groups across the Americas and EMEA with ModelizeIT, contributed to a 1,600+ server master inventory grouped into migration waves, and took part in the pilot migration to Azure (Waves 1 to 6).",
+        stack: ["Azure", "ModelizeIT"],
       },
       {
         title: "Agentic AI proofs of concept and pre-sales",
         period: "Feb – Jul 2026",
         text: "Built about five AI agent POCs on AWS Bedrock AgentCore (DevOps, Terraform IaC, GitLab and EKS operations agents) backed by secured MCP servers and RAG with Bedrock Knowledge Bases. The demos helped win two customer engagements.",
+        stack: ["Bedrock AgentCore", "Bedrock Knowledge Bases", "MCP", "Terraform", "GitLab", "EKS"],
       },
       {
         title: "Cloud discovery, observability and knowledge sharing",
         period: "Jan 2026 – Present",
         text: "Delivered ModelizeIT demos for three international clients, built an EKS fleet observability POC with Quick Suite and Datadog, created an onboarding curriculum, and gave a technical talk on the AWS DevOps Agent.",
+        stack: ["ModelizeIT", "EKS", "Quick Suite", "Datadog", "AWS DevOps Agent"],
       },
     ],
-    stack: ["AWS", "Bedrock", "EKS", "Terraform", "Helm", "MCP", "Azure"],
   },
   {
     company: "Presidio",
@@ -43,7 +48,7 @@ export const experience = [
     location: "Chennai, Tamil Nadu",
     summary:
       "Six-month training program in full stack development and DevOps: SQL Server and PostgreSQL, C# and ASP.NET Core APIs, Angular, design patterns and unit testing, with Razorpay and Azure Blob Storage integrations. Also learned AWS, Azure, Bash scripting and networking.",
-    stack: [".NET", "Angular", "SQL Server", "PostgreSQL", "Azure"],
+    stack: ["C#", "ASP.NET Core", "Angular", "SQL Server", "PostgreSQL", "Razorpay", "Azure"],
   },
   {
     company: "Crafted With Love",

@@ -274,5 +274,17 @@
   "logo-openweaver": {
     "width": 678,
     "height": 120
+  },
+  "mark-litellm": {
+    "width": 96,
+    "height": 96
+  },
+  "mark-modelizeit": {
+    "width": 96,
+    "height": 96
+  },
+  "mark-openweaver-studio": {
+    "width": 96,
+    "height": 96
   }
 }

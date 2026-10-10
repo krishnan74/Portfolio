@@ -1143,6 +1143,34 @@
     text-decoration-color: currentColor;
   }
 
+  /* Technologies under an experience item: logo and name, quiet. */
+  .tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+    color: var(--color-muted);
+    font-size: var(--step--1);
+  }
+
+  .tech-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+  }
+
+  .tech-icon {
+    flex: none;
+    width: 1.15em;
+    height: 1.15em;
+  }
+
+  .tech-mark {
+    background-color: currentColor;
+    -webkit-mask: var(--mark) center / contain no-repeat;
+    mask: var(--mark) center / contain no-repeat;
+  }
+
   .company-logo-light {
     display: var(--logo-light);
   }

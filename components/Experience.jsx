@@ -1,6 +1,7 @@
 import SectionHeader from "./SectionHeader";
 import { experience } from "@/data/experience";
 import images from "@/data/images.json";
+import TechList from "./TechList";
 
 // Logos differ in shape (wordmarks vs a round badge); sizing by aspect gives
 // them about the same visual weight. Wider marks get shorter.
@@ -98,11 +99,12 @@ export default function Experience({ first = false }) {
                       <h4 className="font-display text-step-1 font-bold">{item.title}</h4>
                       <p className="mt-2 text-step--1 text-muted">{item.period}</p>
                       <p className="mt-3">{item.text}</p>
+                      {item.stack && <TechList items={item.stack} className="mt-4" />}
                     </li>
                   ))}
                 </ul>
               )}
-              <p className="text-step--1 text-muted">{job.stack.join(", ")}</p>
+              {job.stack && <TechList items={job.stack} />}
             </div>
           </li>
         ))}
