@@ -22,6 +22,7 @@ export const profile = {
   resume: "/Resume.pdf",
   site: "https://www.divyakrishnan.com",
   portrait: "statue",
+  photo: "me", // About page portrait (public/images/opt)
   // Frames David plays through once his bubble comes off (see Hero): frames
   // 3-16 of assets/images/statue_animation_frames, in order.
   portraitReactions: Array.from({ length: 14 }, (_, i) => `statue-react-${i + 3}`),

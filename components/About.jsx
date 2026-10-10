@@ -11,10 +11,10 @@ export default function About({ first = false }) {
       <div className="mt-8 grid gap-8 md:mt-9 md:grid-cols-12 md:gap-x-5">
         <figure data-reveal className="about-portrait self-start md:col-span-5 lg:col-span-4">
           <Picture
-            name={profile.portrait}
-            alt="Michelangelo's David blowing a pink bubblegum bubble"
-            sizes="(min-width: 768px) 30vw, 80vw"
-            className="w-full"
+            name={profile.photo}
+            alt={`Portrait of ${profile.name}`}
+            sizes="17rem"
+            className="block"
           />
         </figure>
 

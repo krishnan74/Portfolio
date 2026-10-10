@@ -38,6 +38,8 @@ const photos = {
   "whisper-network": "assets/images/project pics/whisper network.jpg",
   "chennai-connects": "assets/images/project pics/chennai connects.png",
   castai: "assets/images/project pics/cast-ai.png",
+  // About page portrait.
+  me: "assets/images/me.jpeg",
 };
 
 // Where the app's own background is too close to the frame for edge
