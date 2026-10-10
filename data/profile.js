@@ -22,6 +22,9 @@ export const profile = {
   resume: "/Resume.pdf",
   site: "https://www.divyakrishnan.com",
   portrait: "statue",
+  // Frames David plays through once his bubble comes off (see Hero): frames
+  // 3-16 of assets/images/statue_animation_frames, in order.
+  portraitReactions: Array.from({ length: 14 }, (_, i) => `statue-react-${i + 3}`),
 };
 
 // `icon` is a react-icons/fa6 export name, used by the hero.

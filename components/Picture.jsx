@@ -2,7 +2,16 @@ import images from "@/data/images.json";
 
 // AVIF/WebP <picture> for files produced by scripts/optimize-images.mjs.
 // Width/height come from the manifest so the browser reserves space.
-export default function Picture({ name, alt, sizes = "100vw", className = "", loading = "lazy", fetchPriority }) {
+export default function Picture({
+  name,
+  alt,
+  sizes = "100vw",
+  className = "",
+  loading = "lazy",
+  fetchPriority,
+  onLoad,
+  onError,
+}) {
   const meta = images[name];
   if (!meta) return null;
   const srcSet = (ext) =>
@@ -21,6 +30,8 @@ export default function Picture({ name, alt, sizes = "100vw", className = "", lo
         loading={loading}
         decoding="async"
         fetchPriority={fetchPriority}
+        onLoad={onLoad}
+        onError={onError}
         className={className}
         style={{ aspectRatio: `${meta.width} / ${meta.height}` }}
       />

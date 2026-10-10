@@ -458,8 +458,59 @@
     user-select: none;
   }
 
+  /* The photo (frame 1 of the render) sits over David's reaction, a
+     flipbook of frames 3-16. When a bubble comes off the photo hides at once
+     (the swollen gum covers the swap) and the frames play, holding on the
+     last; after the pop the photo fades back in over it. Until every frame
+     has loaded (data-frames) the photo simply stays. */
+  .statue {
+    --react-step: 75ms;
+  }
+
+  .statue-photo {
+    position: relative;
+    z-index: 1;
+    transition: opacity var(--dur-slow) var(--ease-out) 200ms;
+  }
+
+  .hero[data-frames="ready"][data-bubble="free"] .statue-photo,
+  .hero[data-frames="ready"][data-bubble="leaving"] .statue-photo,
+  .hero[data-frames="ready"][data-bubble="pop"] .statue-photo {
+    opacity: 0;
+    transition: none;
+  }
+
+  .statue-frame {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  /* The first frame is always there under the photo, so the swap never
+     shows a gap. */
+  .statue-frame-base {
+    opacity: 1;
+  }
+
+  /* data-react is set from the blow until the photo is fully back. Each frame
+     fades in over the one before, which drops out only once covered, so no
+     edge of an earlier pose shows round a later one. */
+  .hero[data-react] .statue-frame {
+    animation: statue-flip calc(var(--react-step) * 2.5) linear calc(var(--frame) * var(--react-step)) backwards;
+  }
+
+  .hero[data-react] .statue-frame-base {
+    opacity: 0;
+    animation-name: statue-hold;
+  }
+
+  .hero[data-react] .statue-frame-last {
+    animation-fill-mode: both;
+  }
+
   /* Sits exactly over the bubble painted in the photo (measured from
-     statue.png); invisible until the gum starts to swell. */
+     frame 1); invisible until the gum starts to swell. */
   .gum {
     position: absolute;
     left: 61.2%;
@@ -475,6 +526,7 @@
     );
     box-shadow: inset -0.3rem -0.45rem 0.9rem rgb(150 30 90 / 0.45),
       inset 0.25rem 0.3rem 0.6rem rgb(255 255 255 / 0.35);
+    z-index: 2;
     opacity: 0;
     transform: translate(-50%, -50%);
     pointer-events: none;
@@ -778,6 +830,23 @@
   .hero-meta,
   .hero-marquee {
     animation: hero-fade var(--dur-slow) var(--ease-out) 480ms both;
+  }
+}
+
+@keyframes statue-flip {
+  from {
+    opacity: 0;
+  }
+  40%,
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes statue-hold {
+  from,
+  to {
+    opacity: 1;
   }
 }
 

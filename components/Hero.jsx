@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import Picture from "./Picture";
@@ -16,6 +16,9 @@ const DEFLATE_MS = 350;
 // How long a bubble that has lost the cursor floats before it pops.
 const LEAVE_MS = 900;
 const POP_MS = 420;
+// After a pop the photo fades back in (200ms delay + --dur-slow in CSS); only
+// then do the reaction frames rewind, out of sight.
+const REWIND_MS = 950;
 const SPLASH = [0, 45, 90, 135, 180, 225, 270, 315];
 
 function Letters({ stagger = false }) {
@@ -39,6 +42,43 @@ export default function Hero() {
   const titleRef = useRef(null);
   const lensRef = useRef(null);
   const copyRef = useRef(null);
+  // David's reaction frames load once the page has, or on first touch of him.
+  const [framesOn, setFramesOn] = useState(false);
+  const framesDone = useRef(0);
+
+  const onFrameDone = () => {
+    framesDone.current += 1;
+    if (framesDone.current === profile.portraitReactions.length && heroRef.current) {
+      heroRef.current.dataset.frames = "ready";
+    }
+  };
+
+  useEffect(() => {
+    const statue = statueRef.current;
+    if (framesOn || !statue) return;
+    const on = () => setFramesOn(true);
+    let cancel = () => {};
+    const later = () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (window.requestIdleCallback) {
+        const id = requestIdleCallback(on, { timeout: 2000 });
+        cancel = () => cancelIdleCallback(id);
+      } else {
+        const id = setTimeout(on, 200);
+        cancel = () => clearTimeout(id);
+      }
+    };
+    if (document.readyState === "complete") later();
+    else window.addEventListener("load", later, { once: true });
+    statue.addEventListener("pointerenter", on, { once: true });
+    statue.addEventListener("pointerdown", on, { once: true });
+    return () => {
+      window.removeEventListener("load", later);
+      statue.removeEventListener("pointerenter", on);
+      statue.removeEventListener("pointerdown", on);
+      cancel();
+    };
+  }, [framesOn]);
 
   // The bubble lives in one of these states:
   //   idle     no bubble; hovering (or pressing) the statue starts charging
@@ -73,6 +113,7 @@ export default function Hero() {
     let charge = 0; // 0..1
     let leftAt = 0;
     let popTimer = 0;
+    let rewindTimer = 0;
     let frame = 0;
     let last = 0;
     let visible = true;
@@ -151,6 +192,11 @@ export default function Hero() {
       vel.y = (dy / len) * 6 - 2;
       setState("free");
       hero.dataset.blown = "true";
+      // Start David's reaction from its first frame.
+      clearTimeout(rewindTimer);
+      delete hero.dataset.react;
+      void hero.offsetWidth;
+      hero.dataset.react = "";
       render();
     };
 
@@ -161,6 +207,7 @@ export default function Hero() {
       popTimer = setTimeout(() => {
         if (state !== "pop") return;
         setState("idle");
+        rewindTimer = setTimeout(() => delete hero.dataset.react, REWIND_MS);
         // Still on the statue? Start blowing the next one.
         start();
       }, POP_MS);
@@ -282,6 +329,8 @@ export default function Hero() {
     const applyMotion = () => {
       stop();
       clearTimeout(popTimer);
+      clearTimeout(rewindTimer);
+      delete hero.dataset.react;
       charge = 0;
       pressing = false;
       renderGum(0);
@@ -308,6 +357,7 @@ export default function Hero() {
     return () => {
       stop();
       clearTimeout(popTimer);
+      clearTimeout(rewindTimer);
       resize.disconnect();
       visibility.disconnect();
       statue.removeEventListener("pointerenter", onStatueEnter);
@@ -339,8 +389,32 @@ export default function Hero() {
                 sizes="(min-width: 1024px) 26rem, (min-width: 768px) 32vw, 18rem"
                 loading="eager"
                 fetchPriority="high"
-                className="block w-full"
+                className="statue-photo block w-full"
               />
+              {/* Under the photo: David's reaction, a flipbook from bubble-less
+                  to shocked, played while the bubble is out. */}
+              {framesOn &&
+                profile.portraitReactions.map((name, i, all) => (
+                  <span
+                    key={name}
+                    className={`statue-frame${i === 0 ? " statue-frame-base" : ""}${
+                      i === all.length - 1 ? " statue-frame-last" : ""
+                    }`}
+                    style={{ "--frame": i }}
+                    aria-hidden="true"
+                  >
+                    <Picture
+                      name={name}
+                      alt=""
+                      sizes="(min-width: 1024px) 26rem, (min-width: 768px) 32vw, 18rem"
+                      loading="eager"
+                      fetchPriority="low"
+                      onLoad={onFrameDone}
+                      onError={onFrameDone}
+                      className="block w-full"
+                    />
+                  </span>
+                ))}
               <span ref={gumRef} className="gum" aria-hidden="true" />
             </div>
           </div>

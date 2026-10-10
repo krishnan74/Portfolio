@@ -118,9 +118,27 @@ for (const [name, file] of Object.entries(photos)) {
   console.log(name, `${width}x${height}`);
 }
 
-// Portrait: keep transparency.
-const portrait = await encode(path.join(root, "public/statue.png"), "statue", [320, 500], true);
-manifest.statue = { ...portrait, widths: [320, 500] };
+// Portrait and David's reaction: 16 transparent frames of one render
+// (assets/images/statue_animation_frames/1..16.webp, lossless, aligned to each
+// other and already cropped to the framing of the original statue.png, so
+// the swap from photo to frames is seamless). Frame 1 is the portrait; frames
+// 3-16 play once his bubble comes off (frame 2, the bubble leaving his lips,
+// is skipped: the hero's own bubble does that). Transparency is kept.
+const framesDir = path.join(root, "assets/images/statue_animation_frames");
+const PORTRAIT = { width: 500, height: 501 };
+const REACTION_FRAMES = Array.from({ length: 14 }, (_, i) => i + 3);
+
+async function statueFrame(n, name) {
+  const frame = await sharp(path.join(framesDir, `${n}.webp`))
+    .resize(PORTRAIT.width, PORTRAIT.height, { fit: "fill" })
+    .png()
+    .toBuffer();
+  await encode(frame, name, [320, 500], true);
+  manifest[name] = { ...PORTRAIT, widths: [320, 500] };
+}
+
+await statueFrame(1, "statue");
+for (const n of REACTION_FRAMES) await statueFrame(n, `statue-react-${n}`);
 
 await fs.writeFile(
   path.join(root, "data/images.json"),
