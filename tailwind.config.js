@@ -45,6 +45,7 @@ module.exports = {
       section: "var(--section-y)",
       page: "var(--page-top)",
       nav: "var(--nav-h)",
+      "nav-top": "var(--nav-top)",
     },
     fontFamily: {
       display: ["var(--font-display)", "system-ui", "sans-serif"],

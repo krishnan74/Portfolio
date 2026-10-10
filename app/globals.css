@@ -25,6 +25,12 @@
   --statue-bg: linear-gradient(140deg, #f1dcea 0%, #e6e0f3 100%);
   --statue-edge: transparent;
   --statue-shadow: var(--color-accent);
+  /* header glass */
+  --glass-bg: rgb(24 24 29 / 0.45);
+  --glass-bg-scrolled: rgb(24 24 29 / 0.82);
+  --glass-edge: rgb(255 255 255 / 0.09);
+  --glass-sheen: rgb(255 255 255 / 0.06);
+  --glass-shadow: 0 0.75rem 2rem -1rem rgb(0 0 0 / 0.6);
   color-scheme: dark;
 
   /* spacing: 4px base */
@@ -42,7 +48,8 @@
   --gutter: clamp(1rem, 0.4rem + 3vw, 3rem);
   --section-y: clamp(6rem, 3rem + 10vw, 12rem);
   --page-top: calc(var(--nav-h) + clamp(3rem, 1.5rem + 5vw, 7rem)); /* first section on a page */
-  --nav-h: 4rem;
+  --nav-top: clamp(1rem, 0.667rem + 1.48vw, 2rem); /* space above the header pill */
+  --nav-h: calc(var(--nav-top) + var(--space-7) + var(--space-3)); /* pill + room below */
   --max-w: 90rem; /* 1440 */
   --hero-min: min(100svh, 64rem); /* full screen, but composed on tall monitors */
   --measure: 64ch;
@@ -103,6 +110,11 @@
     --shadow-raise: 0 1.5rem 3.5rem -1.75rem rgb(40 30 40 / 0.25);
     --statue-edge: #16161a;
     --statue-shadow: #16161a;
+    --glass-bg: rgb(255 255 255 / 0.5);
+    --glass-bg-scrolled: rgb(255 255 255 / 0.8);
+    --glass-edge: rgb(22 22 26 / 0.1);
+    --glass-sheen: rgb(255 255 255 / 0.7);
+    --glass-shadow: 0 0.75rem 2rem -1rem rgb(40 30 40 / 0.3);
     color-scheme: light;
   }
 }
@@ -119,6 +131,11 @@
   --shadow-raise: 0 1.5rem 3.5rem -1.75rem rgb(40 30 40 / 0.25);
   --statue-edge: #16161a;
   --statue-shadow: #16161a;
+  --glass-bg: rgb(255 255 255 / 0.5);
+  --glass-bg-scrolled: rgb(255 255 255 / 0.8);
+  --glass-edge: rgb(22 22 26 / 0.1);
+  --glass-sheen: rgb(255 255 255 / 0.7);
+  --glass-shadow: 0 0.75rem 2rem -1rem rgb(40 30 40 / 0.3);
   color-scheme: light;
 }
 
@@ -210,16 +227,41 @@
     padding-inline: var(--gutter);
   }
 
-  .nav {
-    background-color: transparent;
-    transition-property: transform, background-color, box-shadow;
+  /* The header is a floating pill of frosted glass, centered in the bar. */
+  .nav-glass {
+    height: var(--space-7);
+    padding-inline: var(--space-2);
+    border: 1px solid var(--glass-edge);
+    border-radius: var(--radius-full);
+    background-color: var(--glass-bg);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    backdrop-filter: blur(16px) saturate(1.4);
+    box-shadow: inset 0 1px 0 var(--glass-sheen), var(--glass-shadow);
+    transition: background-color var(--dur-base) var(--ease-out);
   }
 
-  .nav[data-scrolled="true"] {
-    background-color: color-mix(in srgb, var(--color-bg) 82%, transparent);
-    -webkit-backdrop-filter: blur(14px) saturate(1.2);
-    backdrop-filter: blur(14px) saturate(1.2);
-    box-shadow: 0 1px 0 var(--color-line);
+  /* A touch more opaque once content scrolls underneath. */
+  .nav[data-scrolled="true"] .nav-glass {
+    background-color: var(--glass-bg-scrolled);
+  }
+
+  /* Links in the glass sit closer to full ink than --color-muted, so they
+     stay legible over bright or dark content passing underneath. */
+  .nav-glass .nav-link {
+    color: color-mix(in srgb, var(--color-fg) 72%, transparent);
+  }
+
+  .nav-glass .nav-link:hover,
+  .nav-glass .nav-link[aria-current] {
+    color: var(--color-fg);
+  }
+
+  /* Home link: just the mark, with a full-size hit area. */
+  .nav-home {
+    display: inline-grid;
+    place-items: center;
+    width: var(--space-7);
+    height: var(--space-7);
   }
 
   /* The brand mark is the bubble from the hero, in miniature. */

@@ -48,21 +48,15 @@ export default function Nav() {
   return (
     <header
       onFocusCapture={() => setHidden(false)}
-      className={`nav fixed inset-x-0 top-0 z-40 transition-transform duration-base ease-out ${
+      className={`nav fixed inset-x-0 top-0 z-40 flex h-nav items-start justify-center px-gutter pt-nav-top transition-transform duration-base ease-out ${
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
       data-scrolled={scrolled}
     >
-      <nav
-        aria-label="Primary"
-        className="mx-auto flex h-nav max-w-page items-center justify-between gap-5 px-gutter"
-      >
-        <Link
-          href="/"
-          className="flex items-center gap-2 font-display text-step-1 font-bold tracking-tight"
-        >
+      <nav aria-label="Primary" className="nav-glass flex items-center gap-5">
+        {/* Centered: the bubble mark (home), the page links, then the toggle. */}
+        <Link href="/" aria-label={`${profile.name}, home`} className="nav-home text-step-1">
           <span aria-hidden="true" className="nav-mark" />
-          {profile.name}
         </Link>
 
         <div className="flex items-center gap-2 md:gap-5">
@@ -84,12 +78,12 @@ export default function Nav() {
               </a>
             </li>
           </ul>
-          <ThemeToggle className="md:-mr-3" />
+          <ThemeToggle />
           <button
             type="button"
             onClick={openMenu}
             aria-haspopup="dialog"
-            className="-mr-4 h-7 rounded-full px-4 font-medium md:hidden"
+            className="h-7 rounded-full px-4 font-medium md:hidden"
           >
             Menu
           </button>
@@ -98,14 +92,19 @@ export default function Nav() {
 
       <dialog ref={menuRef} className="menu-sheet" aria-label="Menu">
         <div className="flex min-h-full flex-col px-gutter pb-7">
-          <div className="flex h-nav items-center justify-between">
-            <span className="flex items-center gap-2 font-display text-step-1 font-bold tracking-tight">
-              <span aria-hidden="true" className="nav-mark" />
-              {profile.name}
-            </span>
-            <button type="button" onClick={closeMenu} className="-mr-4 h-7 rounded-full px-4 font-medium">
-              Close
-            </button>
+          {/* Mirrors the bar it covers, so Close lands where Menu was. */}
+          <div className="flex h-nav items-start justify-center pt-nav-top">
+            <div className="nav-glass flex items-center gap-5">
+              <span aria-hidden="true" className="nav-home text-step-1">
+                <span className="nav-mark" />
+              </span>
+              <div className="flex items-center gap-2">
+                <span aria-hidden="true" className="h-7 w-7" />
+                <button type="button" onClick={closeMenu} className="h-7 rounded-full px-4 font-medium">
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
           <ul className="mt-8 flex flex-col gap-3">
             {links.map((link) => (
